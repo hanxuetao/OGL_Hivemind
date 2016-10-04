@@ -13,19 +13,29 @@ public class BorderColliderMap : MonoBehaviour
     {
         float difference = col.transform.position.x - transform.position.x;
 
-        // Disable the rigidbody before changing position to prevent weird movement
-        Rigidbody2D rb = col.GetComponent<Rigidbody2D>();
-        Vector2 velocity = rb.velocity;
-        rb.Sleep();
-        rb.gameObject.SetActive(false);
-        
-        // Move the object to the other border
-        Vector2 newPosition = new Vector2(otherBorder.transform.position.x + difference, col.transform.position.y);
-        col.transform.position = newPosition;
+        // If collider has parent (characters have, projectiles don't)
+        if (col.transform.parent)
+        {
+            // Disable the rigidbody before changing position to prevent weird movement
+            Rigidbody2D rb = col.transform.parent.GetComponent<Rigidbody2D>();
+            Vector2 velocity = rb.velocity;
+            rb.Sleep();
+            rb.gameObject.SetActive(false);
 
-        // Enable the rigidbody with the previous velocity
-        rb.gameObject.SetActive(true);
-        rb.WakeUp();
-        rb.velocity = velocity;
+            // Move the object to the other border
+            Vector2 newPosition = new Vector2(otherBorder.transform.position.x + difference, col.transform.position.y);
+            col.transform.parent.position = newPosition;
+
+            // Enable the rigidbody with the previous velocity
+            rb.gameObject.SetActive(true);
+            rb.WakeUp();
+            rb.velocity = velocity;
+        }
+        else
+        {
+            // Move the object to the other border
+            Vector2 newPosition = new Vector2(otherBorder.transform.position.x + difference, col.transform.position.y);
+            col.transform.position = newPosition;
+        }
     }
 }

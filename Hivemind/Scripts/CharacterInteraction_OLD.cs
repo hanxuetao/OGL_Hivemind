@@ -4,13 +4,13 @@ using UnityEngine.UI;
 /// <summary>
 /// Handles interaction with other NPC game objects
 /// </summary>
-public class CharacterInteraction : MonoBehaviour
+public class CharacterInteraction_OLD : MonoBehaviour
 {
     //Reference to our diagUI script for quick access
     public exampleUI diagUI;
     public float reachDistance = 2.5f;
 
-    CharacterMovement cm;
+    PlayerCharacter pc;
     NPC discussionPartner;
 
     // Remote controlled NPC check for testing purposes
@@ -18,17 +18,16 @@ public class CharacterInteraction : MonoBehaviour
 
     void Start()
     {
-        cm = GetComponent<CharacterMovement>();
-        diagUI = FindObjectOfType<exampleUI>();
+        pc = GetComponent<PlayerCharacter>();
     }
 
     void Update()
     {
 
         // If dialog is on, disable movement
-        if (diagUI.dialogue.isLoaded)
+        if (diagUI.dialogue.isLoaded && pc.GetActiveState() == true)
         {
-            cm.AllowCharacterMovement(false);
+            pc.SetActiveState(false);
         }
         // Otherwise allow movement to characters involved in discussion
         else if (!diagUI.dialogue.isLoaded && discussionPartner)
@@ -39,7 +38,7 @@ public class CharacterInteraction : MonoBehaviour
                 discussionPartner = null;
             }
 
-            cm.AllowCharacterMovement(true);
+            pc.SetActiveState(true);
         }
 
         // Interact with NPCs when hitting spacebar
@@ -48,7 +47,7 @@ public class CharacterInteraction : MonoBehaviour
             TryInteract();
         }
 
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + 3), transform.right * reachDistance * Mathf.Sign(transform.localScale.x), Color.red);
+        Debug.DrawRay(transform.position, transform.right * reachDistance * Mathf.Sign(transform.localScale.x), Color.red);
 
     }
 
@@ -58,7 +57,7 @@ public class CharacterInteraction : MonoBehaviour
     void TryInteract()
     {
         // Multi ray
-        RaycastHit2D[] rHit = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y + 3), Vector2.right * Mathf.Sign(transform.localScale.x), reachDistance, -1);
+        RaycastHit2D[] rHit = Physics2D.RaycastAll(transform.position, Vector2.right * Mathf.Sign(transform.localScale.x), reachDistance, -1);
         if (rHit.Length > 0)
         {
             foreach (RaycastHit2D hit in rHit)
@@ -75,7 +74,7 @@ public class CharacterInteraction : MonoBehaviour
                     }
                     else
                     {
-                        discussionPartner = hit.collider.transform.parent.GetComponent<NPC>();
+                        discussionPartner = hit.collider.GetComponent<NPC>();
                         discussionPartner.TurnTowards(transform);
                     }
 

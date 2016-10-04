@@ -16,11 +16,12 @@ public class CharacterMovement : MonoBehaviour {
     Transform _ceilingCheck;
     Transform _groundCheck;
 
+    bool allowMovement = true;
     bool _grounded;
     bool _facingRight = true;
 
     const float _ceilingRadius = .1f;
-    const float _groundedRadius = .2f;
+    const float _groundedRadius = .25f;
 
     void Start()
     {
@@ -32,8 +33,8 @@ public class CharacterMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        _grounded = false;
-        
+        //_grounded = false;
+
         Collider2D[] colliders = Physics2D.OverlapCircleAll(_groundCheck.position, _groundedRadius, m_WhatIsGround);
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -47,30 +48,41 @@ public class CharacterMovement : MonoBehaviour {
 
     public void Move(float move, bool run, bool crouch, bool jump)
     {
-        if (!crouch && _animator.GetBool("Crouch"))
+        if (!allowMovement)
+        {
+            move = 0;
+            run = false;
+            crouch = false;
+            jump = false;
+        }
+
+        // Update crouching stuff
+        if (crouch && !_animator.GetBool("Crouch"))
             if (Physics2D.OverlapCircle(_ceilingCheck.position, _ceilingRadius, m_WhatIsGround))
                 crouch = true;
         _animator.SetBool("Crouch", crouch);
 
         if (_grounded) // || allowAirControl)
         {
+            // Set speed based on crouch/run
             move = (crouch ? move * crouchSpeed : move);
-
             move = (run ? move * runMultiplier : move);
 
+            // Update animator
             _animator.SetBool("Run", run);
-            
             _animator.SetFloat("Speed", Mathf.Abs(move));
 
             // Move the character
             _rigidBody2D.velocity = new Vector2(move * moveSpeed, _rigidBody2D.velocity.y);
 
+            // Get facing direction if stationary
             if (move != 0)
             {
-                //if (transform.localScale.x > 0) _facingRight = true;
-                //else _facingRight = false;
+                if (transform.localScale.x > 0) _facingRight = true;
+                else _facingRight = false;
             }
             
+            // Flip character based on movement and facing direction
             if (move > 0 && !_facingRight)
                 Flip();
             else if (move < 0 && _facingRight)
@@ -87,4 +99,8 @@ public class CharacterMovement : MonoBehaviour {
         transform.localScale = theScale;
     }
 
+    public void AllowCharacterMovement(bool allow)
+    {
+        this.allowMovement = allow;
+    }
 }

@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// Generates a background from chosen gameobjects.
+/// Generates a background from chosen gameobjects. Mainly used to quickly test 2D world wrapping.
 /// <para>Width is defined with chunks. Chunks needs to be uneven number right now.</para>
 /// <para>First 2 childs need to be border colliders used with world wrapping.</para>
 /// <para>The 3rd child is the ground object and the 4th is a killzone.</para>
 /// </summary>
 public class BackgroundGenerator : MonoBehaviour {
 
+    [Range(3f, 49f)]
     public int chunks = 5;
     public bool randomOrder = true;
     public float borderOffset = 0;
@@ -32,6 +33,7 @@ public class BackgroundGenerator : MonoBehaviour {
     public void GenerateBackground()
     {
         if (transform.childCount > 4) RemoveBackground();
+        if (chunks % 2 == 0) chunks -= 1;
 
         NewAvailableBackgroundsList();
 
@@ -118,7 +120,7 @@ public class BackgroundGenerator : MonoBehaviour {
         // Ground
         child = transform.GetChild(2);
         child.localPosition = new Vector2(0, -height / 3);
-        child.localScale = new Vector3(totalWidth + 5, 1);
+        child.localScale = new Vector3(totalWidth + 10, 1);
 
         // Killzone
         child = transform.GetChild(3);
