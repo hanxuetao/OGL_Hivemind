@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿/*
+using UnityEngine;
 using System.Collections.Generic;
 using UnityStandardAssets._2D;
 #if UNITY_5_3_OR_NEWER
 using UnityEngine.SceneManagement;
 #endif
 
-public class AdvancedHivemind : MonoBehaviour
+public class AdvancedHivemind_OLD : MonoBehaviour
 {
     public List<GameObject> characters;
     public GameObject ui;
@@ -18,9 +19,9 @@ public class AdvancedHivemind : MonoBehaviour
     Cameras cameraManager;
 
     // Singleton
-    static AdvancedHivemind instance;
+    static AdvancedHivemind_OLD instance;
     
-    public static AdvancedHivemind GetInstance()
+    public static AdvancedHivemind_OLD GetInstance()
     {
         return instance;
     }
@@ -48,7 +49,9 @@ public class AdvancedHivemind : MonoBehaviour
 
         // Sets the currently active character
         currentCharacter = hivemind[0].Character;
-        currentCharacter.GetComponent<PlayerInput>().enabled = true;
+        currentCharacter.GetComponent<PlayerCharacter>().enabled = true;
+        currentCharacter.GetComponent<PlayerCharacter>().SetActiveState(true);
+        currentCharacter.GetComponent<Platformer2DUserControl>().enabled = true;
 
         cameraManager = Camera.main.transform.parent.gameObject.GetComponent<Cameras>();
         cameraManager.target = currentCharacter.transform;
@@ -86,10 +89,12 @@ public class AdvancedHivemind : MonoBehaviour
     void SwitchCharacter()
     {
         // Probably needs optimization
-        currentCharacter.GetComponent<CharacterMovement>().Move(0, false, false, false);
-        currentCharacter.GetComponent<PlayerInput>().enabled = false;
+        currentCharacter.GetComponent<PlatformerCharacter2D>().Move(0, false, false);
+        currentCharacter.GetComponent<Platformer2DUserControl>().enabled = false;
+        currentCharacter.GetComponent<PlayerCharacter>().SetActiveState(false);
         currentCharacter = hivemind[currentCharacterI].Character;
-        currentCharacter.GetComponent<PlayerInput>().enabled = true;
+        currentCharacter.GetComponent<Platformer2DUserControl>().enabled = true;
+        currentCharacter.GetComponent<PlayerCharacter>().SetActiveState(true);
 
         ui.transform.FindChild("TriggerIndicator").gameObject.SetActive(false);
         
@@ -117,3 +122,4 @@ public class InfectedCharacter
     public int Floor { get; set; }
     public int Life { get; set; } // Decay time/life time
 }
+*/

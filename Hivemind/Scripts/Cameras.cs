@@ -15,12 +15,12 @@ public class Cameras : MonoBehaviour {
     float width;
 
     public bool lockToTarget = true;
-    [HideInInspector] public bool lockedToTarget = true;
+    /*[HideInInspector]*/ public bool lockedToTarget = true;
 
     Vector2 newTargetPos;
     [Range(0f, 10f)] public float cameraMoveSpeed = 10.0f;
     
-    float defaultDistanceForRelock = 0.5f;
+    float defaultDistanceForRelock = 1f;
     float actualDistanceForRelock;
 
     void Start()
@@ -71,7 +71,7 @@ public class Cameras : MonoBehaviour {
 
             /* Lerp version */
             transform.position = Vector2.Lerp(transform.position, newTargetPos, Time.deltaTime * cameraMoveSpeed);
-            if (Vector2.Distance(transform.position, newTargetPos) < actualDistanceForRelock)
+            if (Vector2.Distance(transform.position, newTargetPos) < defaultDistanceForRelock / cameraMoveSpeed)
             {
                 if (lockToTarget) lockedToTarget = true;
             }

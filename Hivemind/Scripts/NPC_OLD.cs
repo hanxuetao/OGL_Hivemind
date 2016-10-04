@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityStandardAssets._2D;
 
-public class NPC : MonoBehaviour {
+public class NPC_OLD : MonoBehaviour {
 
     public bool enableSimpleAI = true;
     public float moveSpeed = 0.5f;
@@ -16,14 +16,16 @@ public class NPC : MonoBehaviour {
         Seeking
     }
 
-    CharacterMovement m_Character;
+    PlayerCharacter pc;
+    PlatformerCharacter2D m_Character;
     State currentState = State.Idle;
     
     float walkDirection = 1;
 
     private void Awake()
     {
-        m_Character = GetComponent<CharacterMovement>();
+        m_Character = GetComponent<PlatformerCharacter2D>();
+        pc = GetComponent<PlayerCharacter>();
 
         //InvokeRepeating("StateRandomization", 1, 1);
     }
@@ -55,11 +57,11 @@ public class NPC : MonoBehaviour {
             switch (currentState)
             {
                 case State.Idle:
-                    m_Character.Move(0, false, false, false);
+                    m_Character.Move(0, false, false);
                     break;
 
                 case State.Wandering:
-                    m_Character.Move(moveSpeed * walkDirection, false, false, false);
+                    m_Character.Move(moveSpeed * walkDirection, false, false);
                     break;
 
                 case State.Seeking:
@@ -124,12 +126,17 @@ public class NPC : MonoBehaviour {
     {
         // Guess this needs optimization.
         enableSimpleAI = false;
-        m_Character.Move(0, false, false, false); // Changes the animation state to idle.
+        m_Character.Move(0, false, false); // Changes the animation state to idle.
         tag = "Player";
         name = "Infected " + gameObject.name;
+        pc.enabled = true;
+        pc.SetActiveState(false);
         transform.parent = GameObject.Find("HIVEMIND").transform;
-        FindObjectOfType<AdvancedHivemind>().AddCharacter(gameObject);
+        pc.userInterface = transform.parent.GetComponent<AdvancedHivemind>().ui;
+        //transform.parent.GetComponent<Hivemind>().characters.Add(gameObject);
         enabled = false;
+
+        FindObjectOfType<AdvancedHivemind>().AddCharacter(gameObject);
     }
 
     /// <summary>
@@ -142,7 +149,7 @@ public class NPC : MonoBehaviour {
         if (!active)
         {
             currentState = State.Idle;
-            GetComponent<CharacterMovement>().Move(0, false, false, false);
+            GetComponent<PlatformerCharacter2D>().Move(0, false, false);
         }
     }
 

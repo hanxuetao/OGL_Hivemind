@@ -16,10 +16,11 @@ public class SporeCloud : MonoBehaviour {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, reachRadius);
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].tag == "NPC" && !colliders[i].name.Contains("Ghost"))
+            Transform colTransform = colliders[i].transform;
+            if (colTransform.tag == "NPC" && !colTransform.name.Contains("Ghost") && colTransform.GetComponentInParent<NPC>())
             {
-                Debug.Log("Infected");
-                colliders[i].GetComponent<NPC>().Infect();
+                if (colTransform.parent.tag == "NPC")
+                    colTransform.GetComponentInParent<NPC>().Infect();
             }
         }
         
