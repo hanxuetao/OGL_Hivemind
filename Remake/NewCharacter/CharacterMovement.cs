@@ -16,7 +16,7 @@ public class CharacterMovement : MonoBehaviour {
     Transform _ceilingCheck;
     Transform _groundCheck;
 
-    bool allowMovement = true;
+    public bool allowMovement = true;
     bool _grounded;
     bool _facingRight = true;
 
@@ -103,4 +103,8 @@ public class CharacterMovement : MonoBehaviour {
     {
         this.allowMovement = allow;
     }
+	public void StopMovement()
+	{
+		allowMovement = false;
+	}
 }

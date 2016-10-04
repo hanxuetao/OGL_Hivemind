@@ -8,6 +8,7 @@ public class NPC : MonoBehaviour {
 
     public bool enableStateLogging = false;
 
+
     enum State
     {
         Infected,
@@ -130,6 +131,15 @@ public class NPC : MonoBehaviour {
         transform.parent = GameObject.Find("HIVEMIND").transform;
         FindObjectOfType<AdvancedHivemind>().AddCharacter(gameObject);
         enabled = false;
+
+
+
+
+
+
+
+
+	
     }
 
     /// <summary>

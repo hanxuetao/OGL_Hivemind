@@ -49,6 +49,7 @@ public class AdvancedHivemind : MonoBehaviour
         // Sets the currently active character
         currentCharacter = hivemind[0].Character;
         currentCharacter.GetComponent<PlayerInput>().enabled = true;
+		currentCharacter.GetComponent<StartInfection>().enabled = true;
 
         cameraManager = Camera.main.transform.parent.gameObject.GetComponent<Cameras>();
         cameraManager.target = currentCharacter.transform;
@@ -90,6 +91,7 @@ public class AdvancedHivemind : MonoBehaviour
         currentCharacter.GetComponent<PlayerInput>().enabled = false;
         currentCharacter = hivemind[currentCharacterI].Character;
         currentCharacter.GetComponent<PlayerInput>().enabled = true;
+		currentCharacter.GetComponent<StartInfection>().enabled = true;
 
         ui.transform.FindChild("TriggerIndicator").gameObject.SetActive(false);
         
