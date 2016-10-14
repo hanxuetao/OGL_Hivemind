@@ -121,6 +121,7 @@ public class AdvancedHivemind : MonoBehaviour
         currentCharacter.GetComponent<CharacterInteraction>().enabled = false;
 
         // Get new character and enable its input scripts
+		currentCharacter.GetComponent<StartInfectionTimer>().enabled = true;
         currentCharacter = hivemind[currentCharacterIndex].Character;
         currentCharacter.GetComponent<RayPlayerInput>().enabled = true;
         currentCharacter.GetComponent<CharacterInteraction>().enabled = true;
@@ -150,6 +151,11 @@ public class AdvancedHivemind : MonoBehaviour
     /// Removes a character from the hivemind.
     /// </summary>
     /// <param name="character"></param>
+	/// 
+	public void CallThisInfection ()
+	{
+		RemoveCharacter(currentCharacter);
+	}
     public void RemoveCharacter(GameObject character)
     {
         if (currentCharacter == character)
@@ -165,4 +171,5 @@ public class AdvancedHivemind : MonoBehaviour
         hivemind.RemoveAll(i => i.Character == character);
         Destroy(character);
     }
+
 }
