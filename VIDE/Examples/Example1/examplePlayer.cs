@@ -6,7 +6,7 @@ public class examplePlayer : MonoBehaviour
     //This script handles player movement and interaction with other NPC game objects
 
     //Reference to our diagUI script for quick access
-    public exampleUI diagUI;
+    public DialogueUI diagUI;
 
     void Update()
     {

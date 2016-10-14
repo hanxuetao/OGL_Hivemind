@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 [System.Serializable]
 public class CharacterPair
@@ -21,29 +20,24 @@ public class GhostManager : MonoBehaviour {
     
 	void Start ()
     {
-
         // Get width of the level's background
         bgWidth = background.GetComponent<BackgroundGenerator>().GetBackgroundWidth();
-
-        // Create parent object for ghost objects - unused right now
-        GameObject ghosts = new GameObject("Ghosts");
-        ghosts.transform.position = Vector3.zero;
-
-        // Get all objects tagged as "NPC"
+        
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("NPC"))
         {
-            // Skip parent objects, because they don't have sprite renderers
-            if (go.GetComponent<CharacterMovement>()) continue;
+            GameObject ghost = new GameObject("Ghost " + go.name);
+            ghost.tag = "NPC";
 
-            // Create ghost object from the original, send it one map width away in x-axis & remove its scripts, childs, rigidbody and animator
-            GameObject ghost = (GameObject)Instantiate(go.GetComponentInChildren<SpriteRenderer>().gameObject, new Vector2(bgWidth, go.transform.position.y), Quaternion.identity);
-            //ghost.transform.parent = ghosts.transform;
-            ghost.transform.parent = go.transform.parent;
-            ghost.GetComponents(typeof(MonoBehaviour)).ToList().ForEach(s => Destroy(s));
-            //ghost.GetComponentsInChildren(typeof(Transform)).ToList().Where(c => c.gameObject != ghost).ToList().ForEach(t => Destroy(t.gameObject)); // No need to delete childs, if has no childs
-            Destroy(ghost.GetComponent<CircleCollider2D>());
-            Destroy(ghost.GetComponent<Animator>());
-            ghost.name = "Ghost " + go.transform.parent.name;
+            ghost.transform.position = new Vector2(bgWidth, go.transform.position.y);
+            ghost.transform.parent = go.transform;
+
+            SpriteRenderer ghostSR = ghost.AddComponent<SpriteRenderer>();
+            BoxCollider2D ghostBC = ghost.AddComponent<BoxCollider2D>();
+
+            BoxCollider2D originalBC = go.GetComponent<BoxCollider2D>();
+
+            ghostBC.size = originalBC.size;
+            ghostBC.offset = originalBC.offset;
 
             // Add the original-ghost pair to list
             characters.Add(
@@ -52,7 +46,7 @@ public class GhostManager : MonoBehaviour {
                     Original = go,
                     Ghost = ghost,
                     OriginalSR = go.GetComponentInChildren<SpriteRenderer>(),
-                    GhostSR = ghost.GetComponent<SpriteRenderer>()
+                    GhostSR = ghostSR
                 }
             );
         }
@@ -76,8 +70,8 @@ public class GhostManager : MonoBehaviour {
             // Update the ghost's sprite to match the original's sprite
             character.GhostSR.sprite = character.OriginalSR.sprite;
 
-            // Update the ghost's local scale to match the original's scale (used to turn the object) - not needed if parent is the original
-            //character.Ghost.transform.localScale = new Vector3(character.Original.transform.localScale.x, character.Original.transform.localScale.y, character.Original.transform.localScale.z);
+            // Update the ghost's look direction to match the original's
+            character.GhostSR.flipX = character.OriginalSR.flipX;
         }
 
     }

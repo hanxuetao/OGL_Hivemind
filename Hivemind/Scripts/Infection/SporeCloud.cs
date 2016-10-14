@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 
+/// <summary>
+/// Infecting spore cloud.
+/// </summary>
 public class SporeCloud : MonoBehaviour {
 
     public float reachRadius = 0.5f;
@@ -17,10 +19,9 @@ public class SporeCloud : MonoBehaviour {
         for (int i = 0; i < colliders.Length; i++)
         {
             Transform colTransform = colliders[i].transform;
-            if (colTransform.tag == "NPC" && !colTransform.name.Contains("Ghost") && colTransform.GetComponentInParent<NPC>())
+            if (colTransform.tag == "NPC" && !colTransform.name.Contains("Ghost") && colTransform.GetComponent<RayNPC>())
             {
-                if (colTransform.parent.tag == "NPC")
-                    colTransform.GetComponentInParent<NPC>().Infect();
+                colTransform.GetComponentInParent<RayNPC>().Infect();
             }
         }
         
@@ -33,16 +34,6 @@ public class SporeCloud : MonoBehaviour {
             }
         }
     }
-    /*
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "NPC")
-        {
-            Debug.Log("Hit");
-            col.gameObject.GetComponent<NPC>().Turn();
-        }
-    }
-    */
 
     void OnDrawGizmosSelected()
     {

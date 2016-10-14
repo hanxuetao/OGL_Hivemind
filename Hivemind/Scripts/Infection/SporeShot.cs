@@ -11,8 +11,9 @@ public class SporeShot : MonoBehaviour {
     void Start () {
         // Spawns cloud if wanted, and destroys object always.
         if (sporeCloud != null) Invoke("SpawnCloud", lifeTime);
-        else Destroy(gameObject, lifeTime);
-	}
+        else Invoke("Despawn", lifeTime);
+
+    }
 
 	public void SetDirection(Vector3 direction) {
 		GetComponent<Rigidbody2D>().velocity = direction * speed;
@@ -22,7 +23,14 @@ public class SporeShot : MonoBehaviour {
     {
         Instantiate(sporeCloud, transform.position, Quaternion.identity);
         transform.GetChild(0).SetParent(null);
+        Despawn();
+    }
+
+    void Despawn()
+    {
         Destroy(gameObject);
+        
+        //ObjectPool.current.Despawn(gameObject);
     }
 
     /* Old test code.

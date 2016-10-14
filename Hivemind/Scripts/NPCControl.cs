@@ -1,24 +1,26 @@
 ﻿using UnityEngine;
-using UnityStandardAssets._2D;
 
+/// <summary>
+/// Controllable secondary character for testing purposes.
+/// <para>J-key moves left, L-key moves right and K-key enables running</para>
+/// </summary>
 public class NPCControl : MonoBehaviour {
-
-    CharacterMovement m_Character;
-    //PlatformerCharacter2D m_Character;
+    
     float dir = 0;
+    RayMovement rayMovement;
 
     private void Awake()
     {
-        m_Character = GetComponent<CharacterMovement>();
-        //m_Character = GetComponent<PlatformerCharacter2D>();
+        rayMovement = GetComponent<RayMovement>();
     }
     
-    void FixedUpdate ()
+    void Update ()
     {
         if (Input.GetKey(KeyCode.J)) dir = -1;
         else if (Input.GetKey(KeyCode.L)) dir = 1;
         else dir = 0;
-
-        m_Character.Move(dir, Input.GetKey(KeyCode.K), false, false);
+        
+        rayMovement.CharacterInput = new Vector2(dir, 0);
+        rayMovement.Run = Input.GetKey(KeyCode.K);
     }
 }
