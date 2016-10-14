@@ -99,7 +99,7 @@ public class AdvancedHivemind : MonoBehaviour
         }
     }
 
-    void SwitchCharacter()
+    public void SwitchCharacter()
     {
         /*
         currentCharacter.GetComponent<CharacterMovement>().Move(0, false, false, false);

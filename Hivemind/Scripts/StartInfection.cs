@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class StartInfection : MonoBehaviour {
 
+	public Slider infection;
 	public int infectionstate = 0;
+
 	// Use this for initialization
 	void Start () {
 		StartCoroutine (InfectionGo ());
+
 		
 	
 	}
@@ -23,10 +27,20 @@ public class StartInfection : MonoBehaviour {
 
 	public void Update()
 	{
-		CharacterMovement cmovement = GetComponent<CharacterMovement> ();
+		infection.value = infectionstate;
+		AdvancedHivemind callthis = GetComponent<AdvancedHivemind> ();
 		if(infectionstate == 5)
 		{
-			cmovement.StopMovement ();
+			//call once
+			for (int i = 0; i < 1; i++) {
+				callthis.SwitchCharacter ();
+			}
+
 		}
 }
+	void DestroyCharacter()
+	{
+		transform.Rotate (0, 0, 90);
+	}
+
 }
