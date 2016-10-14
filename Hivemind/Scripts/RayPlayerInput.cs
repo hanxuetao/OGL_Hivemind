@@ -58,7 +58,7 @@ public class RayPlayerInput : MonoBehaviour {
         // Trigger activation (hard coded key for now)
         if (Input.GetKeyDown(KeyCode.F) && inTrigger != null)
         {
-            if (inTrigger.GetComponent<DoorTrigger>().smoothTransition)
+            if (inTrigger.GetComponent<DoorTrigger>() && inTrigger.GetComponent<DoorTrigger>().smoothTransition)
             {
                 enablePlayerInput = false;
                 //StartCoroutine(rayMovement.WalkToPreviousLevel(inTrigger, 2));
@@ -66,6 +66,9 @@ public class RayPlayerInput : MonoBehaviour {
                 //StartCoroutine(SmoothLevelTransition());
                 inTrigger.GetComponent<Trigger>().Activate();
             }
+            if (inTrigger.GetComponent<ElevatorTrigger>())
+                inTrigger.GetComponent<ElevatorTrigger>().requirementMet = transform.name.Contains(inTrigger.GetComponent<ElevatorTrigger>().requiredAuthorization) ? true : false;
+
             inTrigger.GetComponent<Trigger>().Activate();
         }
 
