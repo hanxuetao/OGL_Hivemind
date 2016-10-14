@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -127,7 +128,19 @@ public class RayPlayerInput : MonoBehaviour {
     
     IEnumerator SmoothLevelTransition()
     {
-        
-        yield return null;
+        Debug.Log("SmoothTransition");
+        inTrigger.transform.root.GetComponents<MonoBehaviour>().ToList().ForEach(s => Destroy(s));
+        inTrigger.transform.root.GetComponentsInChildren<SpriteRenderer>().ToList().ForEach(sr => sr.color = new Color(255, 255, 255, 1));
+        Vector3 targetPos = Vector3.zero;
+        targetPos.x = transform.position.x;
+        inTrigger.transform.SetParent(null);
+        while(inTrigger.transform.root.position != targetPos)
+        //while(inTrigger.GetComponent<Collider2D>().bounds.center != targetPos)
+        {
+            inTrigger.transform.root.position = Vector3.MoveTowards(inTrigger.transform.root.position, targetPos, 4f * Time.deltaTime);
+            yield return null;
+        }
+        transform.position = new Vector2(41.29f, transform.position.y);
+        inTrigger.GetComponent<DoorTrigger>().ActivateScene();
     }
 }

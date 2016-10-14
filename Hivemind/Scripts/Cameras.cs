@@ -48,7 +48,7 @@ public class Cameras : MonoBehaviour {
 
     void LateUpdate()
     {
-
+        if (!FindObjectOfType<AdvancedHivemind>()) return;
         if (target == null) target = FindObjectOfType<AdvancedHivemind>().hivemind[0].Character.transform;
 
         if (lockedToTarget && lockToTarget)
