@@ -14,6 +14,7 @@ public class ElevatorTrigger : MonoBehaviour, Trigger {
         }
         else
         {
+			Destroy(FindObjectOfType<AdvancedHivemind> ().gameObject);
             Application.LoadLevel(2);
         }
 	}

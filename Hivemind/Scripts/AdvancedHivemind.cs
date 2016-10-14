@@ -106,7 +106,7 @@ public class AdvancedHivemind : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD
+
     void DisableOthers()
     {
         for (int i = 0; i < hivemind.Count; i++)
@@ -121,10 +121,10 @@ public class AdvancedHivemind : MonoBehaviour
         }
     }
 
-    void SwitchCharacter()
-=======
+
+
     public void SwitchCharacter()
->>>>>>> refs/remotes/origin/master
+
     {
         /*
         currentCharacter.GetComponent<CharacterMovement>().Move(0, false, false, false);
@@ -144,12 +144,11 @@ public class AdvancedHivemind : MonoBehaviour
             currentCharacter.GetComponent<CharacterInteraction>().enabled = false;
         }*/
 
-<<<<<<< HEAD
+
         // Get new character and enable its input scripts and disable others' scripts
-=======
+
         // Get new character and enable its input scripts
-		currentCharacter.GetComponent<StartInfectionTimer>().enabled = true;
->>>>>>> refs/remotes/origin/master
+		currentCharacter.GetComponent<StartInfectionTimer>().enabled = true; // refs/remotes/origin/master
         currentCharacter = hivemind[currentCharacterIndex].Character;
 
         DisableOthers();
@@ -235,12 +234,11 @@ public class AdvancedHivemind : MonoBehaviour
 
     void OnDestroy()
     {
-<<<<<<< HEAD
         if (instance = this)
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-=======
+
 		Application.LoadLevel (0);
->>>>>>> refs/remotes/origin/master
+
     }
 
 }
