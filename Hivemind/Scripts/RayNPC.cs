@@ -62,7 +62,7 @@ public class RayNPC : MonoBehaviour {
             if (Random.value < .002f)
                 SwitchState();
 
-            if (Random.value < .003f)
+            if (Random.value < .002f)
             {
                 if (comment == null) comment = GetComponentInChildren<RandomComment>();
                 comment.NewRandomComment();
