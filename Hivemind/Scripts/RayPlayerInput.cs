@@ -63,7 +63,8 @@ public class RayPlayerInput : MonoBehaviour {
                 enablePlayerInput = false;
                 //StartCoroutine(rayMovement.WalkToPreviousLevel(inTrigger, 2));
 
-                StartCoroutine(SmoothLevelTransition());
+                //StartCoroutine(SmoothLevelTransition());
+                inTrigger.GetComponent<Trigger>().Activate();
             }
             inTrigger.GetComponent<Trigger>().Activate();
         }
@@ -133,14 +134,19 @@ public class RayPlayerInput : MonoBehaviour {
         inTrigger.transform.root.GetComponentsInChildren<SpriteRenderer>().ToList().ForEach(sr => sr.color = new Color(255, 255, 255, 1));
         Vector3 targetPos = Vector3.zero;
         targetPos.x = transform.position.x;
+        //Vector3 dif = inTrigger.GetComponent<Collider2D>().bounds.center - inTrigger.transform.root.position;
+        GameObject parent = inTrigger.transform.root.gameObject;
         inTrigger.transform.SetParent(null);
+        parent.transform.SetParent(inTrigger.transform);
         while(inTrigger.transform.root.position != targetPos)
         //while(inTrigger.GetComponent<Collider2D>().bounds.center != targetPos)
         {
+            GetComponentInChildren<Animator>().SetFloat("Speed", 1);
             inTrigger.transform.root.position = Vector3.MoveTowards(inTrigger.transform.root.position, targetPos, 4f * Time.deltaTime);
             yield return null;
         }
         transform.position = new Vector2(41.29f, transform.position.y);
+        inTrigger.transform.position = new Vector2(40.93f, 0);
         inTrigger.GetComponent<DoorTrigger>().ActivateScene();
     }
 }
