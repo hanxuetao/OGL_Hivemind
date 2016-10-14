@@ -16,23 +16,24 @@ public class StartInfectionTimer : MonoBehaviour {
 	IEnumerator InfectionGo() {
 		for(int i=0; i<= 5; i++)
 		{
+			
 			infectionstate++;
+
+
 			yield return new WaitForSeconds(10);
+
 		}
 
 	}
 
 	public void Update ()
 	{
-		CharacterMovement cmovement = GetComponent<CharacterMovement> ();
 		if (infectionstate == 5) {
 			for (int i = 0; i < 1; i++) {
 				hivemind.CallThisInfection ();
 
 
-			}
+}
 		}
-
-
 	}
 }
