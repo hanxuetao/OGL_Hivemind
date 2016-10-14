@@ -115,10 +115,13 @@ public class AdvancedHivemind : MonoBehaviour
         */
 
         // Stop the previous character and disable input scripts
-        currentCharacter.GetComponent<RayMovement>().Run = false;
-        currentCharacter.GetComponent<RayMovement>().CharacterInput = Vector2.zero;
-        currentCharacter.GetComponent<RayPlayerInput>().enabled = false;
-        currentCharacter.GetComponent<CharacterInteraction>().enabled = false;
+        if (currentCharacter != null)
+        {
+            currentCharacter.GetComponent<RayMovement>().Run = false;
+            currentCharacter.GetComponent<RayMovement>().CharacterInput = Vector2.zero;
+            currentCharacter.GetComponent<RayPlayerInput>().enabled = false;
+            currentCharacter.GetComponent<CharacterInteraction>().enabled = false;
+        }
 
         // Get new character and enable its input scripts
 		currentCharacter.GetComponent<StartInfectionTimer>().enabled = true;
@@ -158,7 +161,29 @@ public class AdvancedHivemind : MonoBehaviour
 	}
     public void RemoveCharacter(GameObject character)
     {
+        hivemind.RemoveAll(i => i.Character == character);
+
         if (currentCharacter == character)
+        {
+            FindNextAvailableCharacter();
+        }
+
+        Destroy(character);
+    }
+
+    void FindNextAvailableCharacter()
+    {
+        if (hivemind.Count < 1)
+        {
+            GameOver();
+            return;
+        }
+        else if (hivemind.Count == 1)
+        {
+            currentCharacterIndex = 0;
+            currentCharacter = hivemind[currentCharacterIndex].Character;
+        }
+        else
         {
             currentCharacterIndex++;
             if (currentCharacterIndex > hivemind.Count)
@@ -166,10 +191,20 @@ public class AdvancedHivemind : MonoBehaviour
                 currentCharacterIndex = 0;
             }
             currentCharacter = hivemind[currentCharacterIndex].Character;
-            SwitchCharacter();
         }
-        hivemind.RemoveAll(i => i.Character == character);
-        Destroy(character);
+
+        SwitchCharacter();
+    }
+
+    void GameOver()
+    {
+        Debug.Log("GAME OVER. HIVEMIND IS DEAD.");
+        Destroy(gameObject);
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 }
