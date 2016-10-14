@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 #if UNITY_5_3_OR_NEWER
 using UnityEngine.SceneManagement;
@@ -104,7 +105,7 @@ public class AdvancedHivemind : MonoBehaviour
         }
     }
 
-    void SwitchCharacter()
+    public void SwitchCharacter()
     {
         /*
         currentCharacter.GetComponent<CharacterMovement>().Move(0, false, false, false);
@@ -124,6 +125,7 @@ public class AdvancedHivemind : MonoBehaviour
         }
 
         // Get new character and enable its input scripts
+		currentCharacter.GetComponent<StartInfectionTimer>().enabled = true;
         currentCharacter = hivemind[currentCharacterIndex].Character;
         currentCharacter.GetComponent<RayPlayerInput>().enabled = true;
         currentCharacter.GetComponent<CharacterInteraction>().enabled = true;
@@ -153,6 +155,11 @@ public class AdvancedHivemind : MonoBehaviour
     /// Removes a character from the hivemind.
     /// </summary>
     /// <param name="character"></param>
+	/// 
+	public void CallThisInfection ()
+	{
+		RemoveCharacter(currentCharacter);
+	}
     public void RemoveCharacter(GameObject character)
     {
         hivemind.RemoveAll(i => i.Character == character);
@@ -169,7 +176,7 @@ public class AdvancedHivemind : MonoBehaviour
     {
         if (hivemind.Count < 1)
         {
-            GameOver();
+			StartCoroutine (GameOver ());
             return;
         }
         else if (hivemind.Count == 1)
@@ -190,14 +197,17 @@ public class AdvancedHivemind : MonoBehaviour
         SwitchCharacter();
     }
 
-    void GameOver()
+    IEnumerator GameOver()
     {
         Debug.Log("GAME OVER. HIVEMIND IS DEAD.");
+		FindObjectOfType<DebugDisplay>().SetText("Out of hosts. You are dead!");
+		yield return new WaitForSeconds (5);
         Destroy(gameObject);
     }
 
     void OnDestroy()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		Application.LoadLevel (0);
     }
+
 }
