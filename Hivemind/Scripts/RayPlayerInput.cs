@@ -31,7 +31,11 @@ public class RayPlayerInput : MonoBehaviour {
         triggerIndicator = ui.transform.FindChild("TriggerIndicator").gameObject;
     }
 	
-	void Update () {
+	void Update ()
+    {
+        // Interaction with NPC's (hard coded key for now)
+        characterInteraction.TryInteraction = Input.GetKeyDown(KeyCode.E);
+
         if (!enablePlayerInput) return;
 
         // Shooting
@@ -48,9 +52,6 @@ public class RayPlayerInput : MonoBehaviour {
 
         // Running (hard coded key for now)
         rayMovement.Run = Input.GetKey(KeyCode.LeftShift);
-
-        // Interaction with NPC's (hard coded key for now)
-        characterInteraction.TryInteraction = Input.GetKeyDown(KeyCode.E);
 
         // Trigger activation (hard coded key for now)
         if (Input.GetKeyDown(KeyCode.F) && inTrigger != null)

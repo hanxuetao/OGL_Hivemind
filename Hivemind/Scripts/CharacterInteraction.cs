@@ -11,6 +11,7 @@ public class CharacterInteraction : MonoBehaviour
 
     //CharacterMovement cm;
     RayMovement rm;
+    RayPlayerInput rpi;
 
     GameObject discussionPartner;
     RayMovement discussionPartnerRM;
@@ -24,6 +25,7 @@ public class CharacterInteraction : MonoBehaviour
     void Start()
     {
         //cm = GetComponent<CharacterMovement>();
+        rpi = GetComponent<RayPlayerInput>();
         rm = GetComponent<RayMovement>();
         diagUI = FindObjectOfType<DialogueUI>();
     }
@@ -36,6 +38,7 @@ public class CharacterInteraction : MonoBehaviour
         {
             //cm.AllowCharacterMovement(false);
             rm.allowMovement = false;
+            rpi.enablePlayerInput = false;
         }
         // Otherwise allow movement to characters involved in discussion
         else if (!diagUI.dialogue.isLoaded && discussionPartner)
@@ -46,6 +49,7 @@ public class CharacterInteraction : MonoBehaviour
 
             //cm.AllowCharacterMovement(true);
             rm.allowMovement = true;
+            rpi.enablePlayerInput = true;
         }
         
         if (TryInteraction)
