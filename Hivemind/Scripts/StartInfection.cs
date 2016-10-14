@@ -26,7 +26,7 @@ public class StartInfection : MonoBehaviour {
 		CharacterMovement cmovement = GetComponent<CharacterMovement> ();
 		if(infectionstate == 5)
 		{
-			cmovement.StopMovement ();
+			//cmovement.StopMovement ();
 		}
 }
 }

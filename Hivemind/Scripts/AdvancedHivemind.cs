@@ -97,6 +97,11 @@ public class AdvancedHivemind : MonoBehaviour
             SwitchCharacter();
             FindObjectOfType<DebugDisplay>().SetText("Currently controlling\n" + currentCharacter.name);
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            RemoveCharacter(currentCharacter);
+        }
     }
 
     void SwitchCharacter()
@@ -147,6 +152,17 @@ public class AdvancedHivemind : MonoBehaviour
     /// <param name="character"></param>
     public void RemoveCharacter(GameObject character)
     {
+        if (currentCharacter == character)
+        {
+            currentCharacterIndex++;
+            if (currentCharacterIndex > hivemind.Count)
+            {
+                currentCharacterIndex = 0;
+            }
+            currentCharacter = hivemind[currentCharacterIndex].Character;
+            SwitchCharacter();
+        }
         hivemind.RemoveAll(i => i.Character == character);
+        Destroy(character);
     }
 }

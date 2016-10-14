@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e75c2d0e60720494091c988e43e8d533
+guid: 97ee87fea1cd89f49bb67e9bb4fd3d38
 timeCreated: 1474578689
 licenseType: Free
 TextureImporter:
@@ -54,11 +54,14 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 600
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: assistant_walkright_0
+    - serializedVersion: 2
+      name: assistant_walkright_0
       rect:
         serializedVersion: 2
         x: 342
@@ -68,18 +71,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 29.5, y: 121.5}
-        - {x: -2.5, y: 121.5}
-        - {x: -12.5, y: 110.5}
-        - {x: -9.5, y: 85.5}
-        - {x: -27.5, y: 75.5}
-        - {x: -39.5, y: -5.5}
-        - {x: -39.5, y: -120.5}
-        - {x: 40.5, y: -120.5}
-        - {x: 40.5, y: 82.5}
-        - {x: 34.5, y: 119.5}
-    - name: assistant_walkright_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: assistant_walkright_1
       rect:
         serializedVersion: 2
         x: 1330
@@ -89,22 +84,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 59, y: -106.5}
-        - {x: 52, y: -101.5}
-        - {x: 35, y: -35.5}
-        - {x: 29, y: -16.5}
-        - {x: 22, y: 111.5}
-        - {x: 15, y: 121.5}
-        - {x: -27, y: 121.5}
-        - {x: -58, y: -19.5}
-        - {x: -58, y: -117.5}
-        - {x: -47, y: -120.5}
-        - {x: -10, y: -120.5}
-        - {x: 35, y: -118.5}
-        - {x: 57, y: -116.5}
-        - {x: 59, y: -113.5}
-    - name: assistant_walkright_2
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: assistant_walkright_2
       rect:
         serializedVersion: 2
         x: 2382
@@ -114,21 +97,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 46.5, y: -116}
-        - {x: 46.5, y: -76}
-        - {x: 34.5, y: 97}
-        - {x: 26.5, y: 121}
-        - {x: -10.5, y: 121}
-        - {x: -24.5, y: 116}
-        - {x: -45.5, y: -7}
-        - {x: -45.5, y: -115}
-        - {x: -39.5, y: -120}
-        - {x: -10.5, y: -120}
-        - {x: -9.5, y: -115}
-        - {x: 13.5, y: -120}
-        - {x: 26.5, y: -120}
-    - name: assistant_walkright_3
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: assistant_walkright_3
       rect:
         serializedVersion: 2
         x: 3406
@@ -138,14 +110,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -12.5, y: 119}
-        - {x: -37.5, y: 49}
-        - {x: -37.5, y: -88}
-        - {x: -23.5, y: -118}
-        - {x: 38.5, y: -118}
-        - {x: 38.5, y: 119}
-    - name: assistant_walkright_4
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: assistant_walkright_4
       rect:
         serializedVersion: 2
         x: 4430
@@ -155,18 +123,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 51.5, y: -118}
-        - {x: 51.5, y: 26}
-        - {x: 22.5, y: 119}
-        - {x: -17.5, y: 119}
-        - {x: -50.5, y: 44}
-        - {x: -50.5, y: -118}
-        - {x: -11.5, y: -118}
-        - {x: -10.5, y: -110}
-        - {x: -26.5, y: -98}
-        - {x: 17.5, y: -118}
-    - name: assistant_walkright_5
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: assistant_walkright_5
       rect:
         serializedVersion: 2
         x: 5410
@@ -176,16 +136,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -10.5, y: 120.5}
-        - {x: -17.5, y: 115.5}
-        - {x: -59.5, y: 10.5}
-        - {x: -59.5, y: -119.5}
-        - {x: 60.5, y: -119.5}
-        - {x: 60.5, y: -78.5}
-        - {x: 48.5, y: -7.5}
-        - {x: 22.5, y: 120.5}
-    - name: assistant_walkright_6
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: assistant_walkright_6
       rect:
         serializedVersion: 2
         x: 6478
@@ -195,16 +149,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -41.5, y: -111}
-        - {x: -18.5, y: -120}
-        - {x: 42.5, y: -120}
-        - {x: 42.5, y: 110}
-        - {x: 40.5, y: 113}
-        - {x: 28.5, y: 121}
-        - {x: -8.5, y: 121}
-        - {x: -41.5, y: 31}
-    - name: assistant_walkright_7
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: assistant_walkright_7
       rect:
         serializedVersion: 2
         x: 7502
@@ -214,22 +162,8 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 26.5, y: 10}
-        - {x: 26.5, y: 6}
-        - {x: 28.5, y: -4}
-        - {x: 31.5, y: -10}
-        - {x: 38.5, y: -13}
-        - {x: 38.5, y: 121}
-        - {x: -3.5, y: 121}
-        - {x: -10.5, y: 119}
-        - {x: -37.5, y: -9}
-        - {x: -37.5, y: -47}
-        - {x: -24.5, y: -120}
-        - {x: 17.5, y: -120}
-        - {x: 22.5, y: -113}
-        - {x: 28.5, y: -9}
-        - {x: 26.5, y: -9}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: 
   userData: 
