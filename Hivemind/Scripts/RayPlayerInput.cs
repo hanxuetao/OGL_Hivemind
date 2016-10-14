@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// Handles most of player's inputs.
@@ -31,7 +32,11 @@ public class RayPlayerInput : MonoBehaviour {
         triggerIndicator = ui.transform.FindChild("TriggerIndicator").gameObject;
     }
 	
-	void Update () {
+	void Update ()
+    {
+        // Interaction with NPC's (hard coded key for now)
+        characterInteraction.TryInteraction = Input.GetKeyDown(KeyCode.E);
+
         if (!enablePlayerInput) return;
 
         // Shooting
@@ -49,16 +54,15 @@ public class RayPlayerInput : MonoBehaviour {
         // Running (hard coded key for now)
         rayMovement.Run = Input.GetKey(KeyCode.LeftShift);
 
-        // Interaction with NPC's (hard coded key for now)
-        characterInteraction.TryInteraction = Input.GetKeyDown(KeyCode.E);
-
         // Trigger activation (hard coded key for now)
         if (Input.GetKeyDown(KeyCode.F) && inTrigger != null)
         {
             if (inTrigger.GetComponent<DoorTrigger>().smoothTransition)
             {
                 enablePlayerInput = false;
-                StartCoroutine(rayMovement.WalkToPreviousLevel(inTrigger, 2));
+                //StartCoroutine(rayMovement.WalkToPreviousLevel(inTrigger, 2));
+
+                StartCoroutine(SmoothLevelTransition());
             }
             inTrigger.GetComponent<Trigger>().Activate();
         }
@@ -68,6 +72,7 @@ public class RayPlayerInput : MonoBehaviour {
         {
             //StartCoroutine(rayMovement.GoToHigherGroundLevel());
             //rayMovement.MoveToHigherGroundLevel();
+
         }
 
         // Down (go down in levels) (hard coded key for now)
@@ -120,4 +125,9 @@ public class RayPlayerInput : MonoBehaviour {
         }
     }
     
+    IEnumerator SmoothLevelTransition()
+    {
+        
+        yield return null;
+    }
 }
