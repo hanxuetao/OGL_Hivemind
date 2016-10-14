@@ -57,6 +57,7 @@ public class GhostManager : MonoBehaviour {
         
         foreach (CharacterPair character in characters)
         {
+<<<<<<< HEAD
             if (character.Original == null)
             {
                 characters.Remove(character);
@@ -64,6 +65,13 @@ public class GhostManager : MonoBehaviour {
             }
 
             // Sets the x position of the ghost object to the opposite side of the map from the original depending on which side of the x-axis the original currently is
+=======
+			if (character.Original == null) {
+				characters.Remove (character);
+				return;
+			}
+			// Sets the x position of the ghost object to the opposite side of the map from the original depending on which side of the x-axis the original currently is
+>>>>>>> refs/remotes/origin/master
             if (Mathf.Sign(character.Original.transform.position.x) > 0)
             {
                 character.Ghost.transform.position = new Vector2(character.Original.transform.position.x - bgWidth, character.Original.transform.position.y);

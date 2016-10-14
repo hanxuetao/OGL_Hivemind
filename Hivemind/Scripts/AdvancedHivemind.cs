@@ -104,7 +104,7 @@ public class AdvancedHivemind : MonoBehaviour
         }
     }
 
-    void SwitchCharacter()
+    public void SwitchCharacter()
     {
         /*
         currentCharacter.GetComponent<CharacterMovement>().Move(0, false, false, false);
@@ -124,6 +124,7 @@ public class AdvancedHivemind : MonoBehaviour
         }
 
         // Get new character and enable its input scripts
+		currentCharacter.GetComponent<StartInfectionTimer>().enabled = true;
         currentCharacter = hivemind[currentCharacterIndex].Character;
         currentCharacter.GetComponent<RayPlayerInput>().enabled = true;
         currentCharacter.GetComponent<CharacterInteraction>().enabled = true;
@@ -153,6 +154,11 @@ public class AdvancedHivemind : MonoBehaviour
     /// Removes a character from the hivemind.
     /// </summary>
     /// <param name="character"></param>
+	/// 
+	public void CallThisInfection ()
+	{
+		RemoveCharacter(currentCharacter);
+	}
     public void RemoveCharacter(GameObject character)
     {
         hivemind.RemoveAll(i => i.Character == character);
@@ -200,4 +206,5 @@ public class AdvancedHivemind : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
 }
