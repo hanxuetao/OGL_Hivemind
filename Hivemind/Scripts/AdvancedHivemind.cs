@@ -57,6 +57,7 @@ public class AdvancedHivemind : MonoBehaviour
 
         // Sets the currently active character
         currentCharacter = hivemind[currentCharacterIndex].Character;
+        DisableOthers();
 
         // Disable input for every character except the first one
         for (int i = 0; i < hivemind.Count; i++)
@@ -104,6 +105,20 @@ public class AdvancedHivemind : MonoBehaviour
         }
     }
 
+    void DisableOthers()
+    {
+        for (int i = 0; i < hivemind.Count; i++)
+        {
+            if (i != currentCharacterIndex)
+            {
+                hivemind[i].Character.GetComponent<RayMovement>().Run = false;
+                hivemind[i].Character.GetComponent<RayMovement>().CharacterInput = Vector2.zero;
+                hivemind[i].Character.GetComponent<RayPlayerInput>().enabled = false;
+                hivemind[i].Character.GetComponent<CharacterInteraction>().enabled = false;
+            }
+        }
+    }
+
     void SwitchCharacter()
     {
         /*
@@ -115,16 +130,20 @@ public class AdvancedHivemind : MonoBehaviour
         */
 
         // Stop the previous character and disable input scripts
+        /*
         if (currentCharacter != null)
         {
             currentCharacter.GetComponent<RayMovement>().Run = false;
             currentCharacter.GetComponent<RayMovement>().CharacterInput = Vector2.zero;
             currentCharacter.GetComponent<RayPlayerInput>().enabled = false;
             currentCharacter.GetComponent<CharacterInteraction>().enabled = false;
-        }
+        }*/
 
-        // Get new character and enable its input scripts
+        // Get new character and enable its input scripts and disable others' scripts
         currentCharacter = hivemind[currentCharacterIndex].Character;
+
+        DisableOthers();
+
         currentCharacter.GetComponent<RayPlayerInput>().enabled = true;
         currentCharacter.GetComponent<CharacterInteraction>().enabled = true;
 
@@ -147,6 +166,7 @@ public class AdvancedHivemind : MonoBehaviour
         character.transform.parent = gameObject.transform;
         character.GetComponent<RayPlayerInput>().enabled = false;
         character.GetComponent<RayNPC>().enabled = false;
+        character.GetComponentInChildren<RandomComment>().transform.parent.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -198,6 +218,7 @@ public class AdvancedHivemind : MonoBehaviour
 
     void OnDestroy()
     {
+        if (instance = this)
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
