@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// Handles interaction with other NPC game objects
@@ -7,19 +6,26 @@ using UnityEngine.UI;
 public class CharacterInteraction : MonoBehaviour
 {
     //Reference to our diagUI script for quick access
-    public exampleUI diagUI;
+    public DialogueUI diagUI;
     public float reachDistance = 2.5f;
 
-    CharacterMovement cm;
-    NPC discussionPartner;
+    //CharacterMovement cm;
+    RayMovement rm;
+
+    GameObject discussionPartner;
+    RayMovement discussionPartnerRM;
+    RayNPC discussionPartnerRNPC;
+
+    [HideInInspector] public bool TryInteraction = false;
 
     // Remote controlled NPC check for testing purposes
     bool isControlledNPC;
 
     void Start()
     {
-        cm = GetComponent<CharacterMovement>();
-        diagUI = FindObjectOfType<exampleUI>();
+        //cm = GetComponent<CharacterMovement>();
+        rm = GetComponent<RayMovement>();
+        diagUI = FindObjectOfType<DialogueUI>();
     }
 
     void Update()
@@ -28,27 +34,26 @@ public class CharacterInteraction : MonoBehaviour
         // If dialog is on, disable movement
         if (diagUI.dialogue.isLoaded)
         {
-            cm.AllowCharacterMovement(false);
+            //cm.AllowCharacterMovement(false);
+            rm.allowMovement = false;
         }
         // Otherwise allow movement to characters involved in discussion
         else if (!diagUI.dialogue.isLoaded && discussionPartner)
         {
-            if (discussionPartner)
-            {
-                discussionPartner.SetAIBehaviourActive(!isControlledNPC);
-                discussionPartner = null;
-            }
+            discussionPartner.GetComponent<RayNPC>().SetAIBehaviourActive(!isControlledNPC);
+            discussionPartner.GetComponent<RayMovement>().allowMovement = true;
+            discussionPartner = null;
 
-            cm.AllowCharacterMovement(true);
+            //cm.AllowCharacterMovement(true);
+            rm.allowMovement = true;
         }
-
-        // Interact with NPCs when hitting spacebar
-        if (Input.GetKeyDown(KeyCode.Space))
+        
+        if (TryInteraction)
         {
             TryInteract();
         }
 
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + 3), transform.right * reachDistance * Mathf.Sign(transform.localScale.x), Color.red);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + 3), transform.right * reachDistance * rm.facingDirection, Color.red);
 
     }
 
@@ -57,8 +62,14 @@ public class CharacterInteraction : MonoBehaviour
     /// </summary>
     void TryInteract()
     {
+        if (discussionPartner)
+        {
+            DoInteraction();
+            return;
+        }
+
         // Multi ray
-        RaycastHit2D[] rHit = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y + 3), Vector2.right * Mathf.Sign(transform.localScale.x), reachDistance, -1);
+        RaycastHit2D[] rHit = Physics2D.RaycastAll(new Vector2(transform.position.x, transform.position.y + 3), Vector2.right * rm.facingDirection, reachDistance, -1);
         if (rHit.Length > 0)
         {
             foreach (RaycastHit2D hit in rHit)
@@ -68,41 +79,49 @@ public class CharacterInteraction : MonoBehaviour
                     // Check for a ghost object
                     if (hit.collider.name.StartsWith("Ghost"))
                     {
-                        // Get the ghost's original from the character pair list
-                        CharacterPair cp = FindObjectOfType<GhostManager>().characters.Find(c => c.Ghost == hit.collider.gameObject);
-                        discussionPartner = cp.Original.GetComponent<NPC>();
-                        discussionPartner.TurnTowards(transform, true);
+                        // Get the ghost's original from the character pair list - not needed if ghost is original's child
+                        //CharacterPair cp = FindObjectOfType<GhostManager>().characters.Find(c => c.Ghost == hit.collider.gameObject);
+
+                        discussionPartner = hit.collider.transform.parent.gameObject;
                     }
                     else
                     {
-                        discussionPartner = hit.collider.transform.parent.GetComponent<NPC>();
-                        discussionPartner.TurnTowards(transform);
+                        discussionPartner = hit.collider.gameObject;
                     }
 
-                    discussionPartner.SetAIBehaviourActive(false);
+                    discussionPartnerRM = discussionPartner.GetComponent<RayMovement>();
+                    discussionPartnerRNPC = discussionPartner.GetComponent<RayNPC>();
+                    isControlledNPC = discussionPartner.GetComponent<NPCControl>();
 
-                    //Lets grab the NPC's DialogueAssign script...
-                    VIDE_Assign assigned = discussionPartner.gameObject.GetComponent<VIDE_Assign>();
+                    discussionPartnerRM.allowMovement = false;
+                    discussionPartnerRM.FaceTarget(GetComponentInChildren<SpriteRenderer>());
+                    discussionPartnerRNPC.SetAIBehaviourActive(false);
 
-                    if (!diagUI.dialogue.isLoaded)
-                    {
-                        //... and use it to begin the conversation
-                        diagUI.Begin(assigned);
-                    }
-                    else
-                    {
-                        //If conversation already began, let's just progress through it
-                        diagUI.NextNode();
-                    }
-
-                    isControlledNPC = discussionPartner.name.Contains("Controlled");
+                    DoInteraction();
 
                     // Break the loop so that only one conversation is active in case many NPC's got raycasted
                     break;
                 }
             }
         }
+    }
 
-        if (discussionPartner) diagUI.npcName.text = discussionPartner.name;
+    void DoInteraction()
+    {
+        //Lets grab the NPC's DialogueAssign script...
+        VIDE_Assign assigned = discussionPartner.GetComponent<VIDE_Assign>();
+
+        if (!diagUI.dialogue.isLoaded)
+        {
+            //... and use it to begin the conversation
+            diagUI.Begin(assigned);
+        }
+        else
+        {
+            //If conversation already began, let's just progress through it
+            diagUI.NextNode();
+        }
+        diagUI.npcName.text = discussionPartner.name;
+
     }
 }

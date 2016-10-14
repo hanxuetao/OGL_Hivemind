@@ -12,13 +12,101 @@ public class DoorTrigger : MonoBehaviour, Trigger {
 
     AsyncOperation async;
 
+    void Start()
+    {
+        SetSmoothTransition();
+    }
+
+    void SetSmoothTransition()
+    {
+        // Smooth transition moves player character downwards,
+        // so it is only allowed when going to lower levels, for now at least
+        int currentLevelNumber = int.Parse(GetLevelNameNumber());
+        smoothTransition = (currentLevelNumber > loadLevel) ? true : false;
+    }
+
     /// <summary>
-    /// Gets the level name prefix (level/testscene/floor) from the scene name,
-    /// removes numbers from it and the loads the next level that has the same prefix.
+    /// Gets the current scene name prefix. E.g. if scene name is "Scene001", returns "Scene".
+    /// </summary>
+    /// <returns></returns>
+    string GetLevelNamePrefix()
+    {
+        string levelNamePrefix;
+#if UNITY_5_3_OR_NEWER
+        levelNamePrefix = SceneManager.GetActiveScene().name;
+        levelNamePrefix = Regex.Replace(levelNamePrefix, @"[\d-]", string.Empty);
+#else
+        levelNamePrefix = Application.loadedLevelName;
+        levelNamePrefix = Regex.Replace(levelNamePrefix, @"[\d-]", string.Empty);
+#endif
+        return levelNamePrefix;
+    }
+
+    /// <summary>
+    /// Gets the current scene number. E.g. if scene name is "Scene001", returns "001".
+    /// <para>Returns the number as a string so that 0's do not disappear.</para>
+    /// </summary>
+    /// <returns></returns>
+    string GetLevelNameNumber()
+    {
+        string currentLevel;
+        string currentLevelNumber;
+
+#if UNITY_5_3_OR_NEWER
+        currentLevel = SceneManager.GetActiveScene().name;
+#else
+        currentLevel = Application.loadedLevelName;
+#endif
+        currentLevelNumber = Regex.Match(currentLevel, @"[\d-]").Value;
+        return currentLevelNumber;
+    }
+
+    /// <summary>
+    /// Loads a level with given name.
+    /// </summary>
+    /// <param name="name"></param>
+    void LoadLevel(string name)
+    {
+#if UNITY_5_3_OR_NEWER
+        SceneManager.LoadScene(name);
+#else
+        Application.LoadLevel(name);
+#endif
+    }
+
+    /// <summary>
+    /// Loads the scene asynchronously in the background, allowing the scene to be activated later.
+    /// </summary>
+    /// <param name="namePrefix"></param>
+    /// <returns></returns>
+    IEnumerator SmoothTransition(string name)
+    {
+        Debug.LogWarning("Asynchronous scene loading started. Do not exit play mode until scene has loaded or Unity might crash.");
+
+#if UNITY_5_3_OR_NEWER
+        async = SceneManager.LoadSceneAsync(name);
+#else
+        async = Application.LoadLevelAsync(name);
+#endif
+
+        async.allowSceneActivation = false;
+        yield return async;
+    }
+
+    /// <summary>
+    /// Activation of the trigger.
+    /// <para>Loads the set level immediately if going forward in scenes and asynchronously if going backwards in scenes.</para>
     /// </summary>
     public void Activate()
     {
+        string name = GetLevelNamePrefix() + loadLevel;
 
+        if (!smoothTransition)
+            LoadLevel(name);
+        else
+            StartCoroutine(SmoothTransition(name));
+
+        /*
 #if UNITY_5_3_OR_NEWER
         string levelNamePrefix = SceneManager.GetActiveScene().name;
         levelNamePrefix = Regex.Replace(levelNamePrefix, @"[\d-]", string.Empty);
@@ -34,26 +122,7 @@ public class DoorTrigger : MonoBehaviour, Trigger {
         else
             StartCoroutine(SmoothTransition(levelNamePrefix));
 #endif
-
-    }
-
-    /// <summary>
-    /// Loads the scene asynchronously without activating it.
-    /// </summary>
-    /// <param name="namePrefix"></param>
-    /// <returns></returns>
-    IEnumerator SmoothTransition(string namePrefix)
-    {
-        Debug.LogWarning("Asynchronous scene loading started. Do not exit play mode until scene has loaded or Unity might crash.");
-
-#if UNITY_5_3_OR_NEWER
-        async = SceneManager.LoadSceneAsync(namePrefix + loadLevel);
-#else
-        async = Application.LoadLevelAsync(namePrefix + loadLevel);
-#endif
-        
-        async.allowSceneActivation = false;
-        yield return async;
+        */
     }
 
     /// <summary>
@@ -70,7 +139,12 @@ public class DoorTrigger : MonoBehaviour, Trigger {
     public void LoadScene(int number = -1)
     {
         if (number > -1) loadLevel = number;
+        else return;
 
+        string name = GetLevelNamePrefix() + loadLevel;
+
+        LoadLevel(name);
+        /*
 #if UNITY_5_3_OR_NEWER
         string levelNamePrefix = SceneManager.GetActiveScene().name;
         levelNamePrefix = Regex.Replace(levelNamePrefix, @"[\d-]", string.Empty);
@@ -80,6 +154,6 @@ public class DoorTrigger : MonoBehaviour, Trigger {
         levelNamePrefix = Regex.Replace(levelNamePrefix, @"[\d-]", string.Empty);
         Application.LoadLevel(levelNamePrefix + loadLevel);
 #endif
-
+        */
     }
 }

@@ -1,0 +1,619 @@
+fileFormatVersion: 2
+guid: 08e296083fe0ea641ac77954ac985c4b
+timeCreated: 1476358452
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: walkstrip_0
+    21300002: walkstrip_1
+    21300004: walkstrip_2
+    21300006: walkstrip_3
+    21300008: walkstrip_4
+    21300010: walkstrip_5
+    21300012: walkstrip_6
+    21300014: walkstrip_7
+    21300016: walkstrip_8
+    21300018: walkstrip_9
+    21300020: walkstrip_10
+    21300022: walkstrip_11
+    21300024: walkstrip_12
+    21300026: walkstrip_13
+    21300028: walkstrip_14
+    21300030: walkstrip_15
+    21300032: walkstrip_16
+    21300034: walkstrip_17
+    21300036: walkstrip_18
+    21300038: walkstrip_19
+    21300040: walkstrip_20
+    21300042: walkstrip_21
+    21300044: walkstrip_22
+    21300046: walkstrip_23
+    21300048: walkstrip_24
+    21300050: walkstrip_25
+    21300052: walkstrip_26
+    21300054: walkstrip_27
+    21300056: walkstrip_28
+    21300058: walkstrip_29
+    21300060: walkstrip_30
+    21300062: walkstrip_31
+    21300064: walkstrip_32
+    21300066: walkstrip_33
+    21300068: walkstrip_34
+    21300070: walkstrip_35
+    21300072: walkstrip_36
+    21300074: walkstrip_37
+    21300076: walkstrip_38
+    21300078: walkstrip_39
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 200
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: walkstrip_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8604
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_1
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 8604
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_2
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 8604
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_3
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 8604
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 7648
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_5
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 7648
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_6
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 7648
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_7
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 7648
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6692
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_9
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 6692
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_10
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 6692
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_11
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 6692
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5736
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_13
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 5736
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_14
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 5736
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_15
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 5736
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4780
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_17
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 4780
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_18
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 4780
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_19
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 4780
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3824
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_21
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 3824
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_22
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 3824
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_23
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 3824
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2868
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_25
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 2868
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_26
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 2868
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_27
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 2868
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1912
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_29
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 1912
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_30
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 1912
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_31
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 1912
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 956
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_33
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 956
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_34
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 956
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_35
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 956
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_37
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 0
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_38
+      rect:
+        serializedVersion: 2
+        x: 998
+        y: 0
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: walkstrip_39
+      rect:
+        serializedVersion: 2
+        x: 1497
+        y: 0
+        width: 499
+        height: 956
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
