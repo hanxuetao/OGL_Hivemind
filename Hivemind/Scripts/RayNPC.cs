@@ -19,6 +19,7 @@ public class RayNPC : MonoBehaviour {
         Chasing
     }
 
+    RandomComment comment;
     RayMovement rayMovement;
     State currentState = State.Idle;
     
@@ -29,6 +30,12 @@ public class RayNPC : MonoBehaviour {
         rayMovement = GetComponent<RayMovement>();
 
         //InvokeRepeating("StateRandomization", 1, 1);
+    }
+
+    void Start()
+    {
+        comment = GetComponentInChildren<RandomComment>();
+        comment.transform.parent.gameObject.SetActive(false);
     }
 
     void Update()
@@ -54,6 +61,12 @@ public class RayNPC : MonoBehaviour {
             // If FPS=30, the chance of changing state is 6% per second.
             if (Random.value < .002f)
                 SwitchState();
+
+            if (Random.value < .003f)
+            {
+                if (comment == null) comment = GetComponentInChildren<RandomComment>();
+                comment.NewRandomComment();
+            }
             
             switch (currentState)
             {

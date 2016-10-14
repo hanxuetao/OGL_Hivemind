@@ -39,9 +39,15 @@ public class CharacterInteraction : MonoBehaviour
             //cm.AllowCharacterMovement(false);
             rm.allowMovement = false;
             rpi.enablePlayerInput = false;
+
+            if (Input.GetAxisRaw("Horizontal") != 0)
+            {
+                diagUI.dialogue.EndDialogue();
+            }
         }
+
         // Otherwise allow movement to characters involved in discussion
-        else if (!diagUI.dialogue.isLoaded && discussionPartner)
+        if (!diagUI.dialogue.isLoaded && discussionPartner)
         {
             discussionPartner.GetComponent<RayNPC>().SetAIBehaviourActive(!isControlledNPC);
             discussionPartner.GetComponent<RayMovement>().allowMovement = true;
