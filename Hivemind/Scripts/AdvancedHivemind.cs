@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 #if UNITY_5_3_OR_NEWER
 using UnityEngine.SceneManagement;
@@ -105,6 +106,7 @@ public class AdvancedHivemind : MonoBehaviour
         }
     }
 
+
     void DisableOthers()
     {
         for (int i = 0; i < hivemind.Count; i++)
@@ -119,7 +121,10 @@ public class AdvancedHivemind : MonoBehaviour
         }
     }
 
-    void SwitchCharacter()
+
+
+    public void SwitchCharacter()
+
     {
         /*
         currentCharacter.GetComponent<CharacterMovement>().Move(0, false, false, false);
@@ -139,7 +144,11 @@ public class AdvancedHivemind : MonoBehaviour
             currentCharacter.GetComponent<CharacterInteraction>().enabled = false;
         }*/
 
+
         // Get new character and enable its input scripts and disable others' scripts
+
+        // Get new character and enable its input scripts
+		currentCharacter.GetComponent<StartInfectionTimer>().enabled = true; // refs/remotes/origin/master
         currentCharacter = hivemind[currentCharacterIndex].Character;
 
         DisableOthers();
@@ -173,6 +182,11 @@ public class AdvancedHivemind : MonoBehaviour
     /// Removes a character from the hivemind.
     /// </summary>
     /// <param name="character"></param>
+	/// 
+	public void CallThisInfection ()
+	{
+		RemoveCharacter(currentCharacter);
+	}
     public void RemoveCharacter(GameObject character)
     {
         hivemind.RemoveAll(i => i.Character == character);
@@ -189,7 +203,7 @@ public class AdvancedHivemind : MonoBehaviour
     {
         if (hivemind.Count < 1)
         {
-            GameOver();
+			StartCoroutine (GameOver ());
             return;
         }
         else if (hivemind.Count == 1)
@@ -210,9 +224,11 @@ public class AdvancedHivemind : MonoBehaviour
         SwitchCharacter();
     }
 
-    void GameOver()
+    IEnumerator GameOver()
     {
         Debug.Log("GAME OVER. HIVEMIND IS DEAD.");
+		FindObjectOfType<DebugDisplay>().SetText("Out of hosts. You are dead!");
+		yield return new WaitForSeconds (5);
         Destroy(gameObject);
     }
 
@@ -220,5 +236,9 @@ public class AdvancedHivemind : MonoBehaviour
     {
         if (instance = this)
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+		Application.LoadLevel (0);
+
     }
+
 }
