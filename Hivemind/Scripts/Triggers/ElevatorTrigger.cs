@@ -10,11 +10,11 @@ public class ElevatorTrigger : MonoBehaviour, Trigger {
 	public void Activate() {
 		if (!requirementMet)
         {
-            FindObjectOfType<DebugDisplay>().SetText("You have no authorization to use this elevator.");
+            FindObjectOfType<DebugDisplay>().SetText("You have no authorization to use this elevator. Find someone who has.");
         }
         else
         {
-			Destroy(FindObjectOfType<AdvancedHivemind> ().gameObject);
+			Destroy(FindObjectOfType<AdvancedHivemind>().gameObject);
             Application.LoadLevel(2);
         }
 	}
