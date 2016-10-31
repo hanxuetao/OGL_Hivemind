@@ -49,7 +49,13 @@ public class Cameras : MonoBehaviour {
     void LateUpdate()
     {
         if (!FindObjectOfType<AdvancedHivemind>()) return;
-        if (target == null) target = FindObjectOfType<AdvancedHivemind>().hivemind[0].Character.transform;
+        //if (target == null) target = FindObjectOfType<AdvancedHivemind>().hivemind[0].Character.transform;
+
+        if (!target)
+        {
+            //Camera.main.orthographicSize -= Time.deltaTime * 0.25f; // not working at border
+            return;
+        }
 
         if (lockedToTarget && lockToTarget)
         {
@@ -85,12 +91,12 @@ public class Cameras : MonoBehaviour {
 
     public void ChangeTargetSmooth(GameObject target, float cameraSpeed)
     {
-        ChangeTargetSmooth(target);
+        ChangeTarget(target);
         cameraMoveSpeed = cameraSpeed;
         actualDistanceForRelock = defaultDistanceForRelock / cameraMoveSpeed;
     }
 
-    public void ChangeTargetSmooth(GameObject target)
+    public void ChangeTarget(GameObject target)
     {
         lockedToTarget = false;
         this.target = target.transform;

@@ -16,7 +16,6 @@ public class InfectedCharacter
 
 public class AdvancedHivemind : MonoBehaviour
 {
-    public List<GameObject> characters;
     public GameObject ui;
 
     GameObject currentCharacter;
@@ -29,7 +28,7 @@ public class AdvancedHivemind : MonoBehaviour
 
     // Singleton
     static AdvancedHivemind instance;
-    
+
     public static AdvancedHivemind GetInstance()
     {
         return instance;
@@ -58,6 +57,7 @@ public class AdvancedHivemind : MonoBehaviour
 
         // Sets the currently active character
         currentCharacter = hivemind[currentCharacterIndex].Character;
+        currentCharacter.AddComponent<InfectionTimer>().BeginTimer();
         DisableOthers();
 
         // Disable input for every character except the first one
@@ -95,14 +95,9 @@ public class AdvancedHivemind : MonoBehaviour
                 if (currentCharacterIndex > 0) currentCharacterIndex--;
                 else currentCharacterIndex = hivemind.Count - 1;
             }
-            
+
             SwitchCharacter();
             FindObjectOfType<DebugDisplay>().SetText("Currently controlling\n" + currentCharacter.name);
-        }
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            RemoveCharacter(currentCharacter);
         }
     }
 
@@ -148,7 +143,7 @@ public class AdvancedHivemind : MonoBehaviour
         // Get new character and enable its input scripts and disable others' scripts
 
         // Get new character and enable its input scripts
-		currentCharacter.GetComponent<StartInfectionTimer>().enabled = true; // refs/remotes/origin/master
+        //currentCharacter.GetComponent<InfectionTimer>().enabled = true; // refs/remotes/origin/master
         currentCharacter = hivemind[currentCharacterIndex].Character;
 
         DisableOthers();
@@ -157,8 +152,8 @@ public class AdvancedHivemind : MonoBehaviour
         currentCharacter.GetComponent<CharacterInteraction>().enabled = true;
 
         ui.transform.FindChild("TriggerIndicator").gameObject.SetActive(false);
-        
-        cameraManager.ChangeTargetSmooth(currentCharacter);
+
+        cameraManager.ChangeTarget(currentCharacter);
     }
 
     /// <summary>
@@ -175,7 +170,9 @@ public class AdvancedHivemind : MonoBehaviour
         character.transform.parent = gameObject.transform;
         character.GetComponent<RayPlayerInput>().enabled = false;
         character.GetComponent<RayNPC>().enabled = false;
-        character.GetComponentInChildren<RandomComment>().transform.parent.gameObject.SetActive(false);
+        if (character.GetComponentInChildren<RandomComment>())
+            character.GetComponentInChildren<RandomComment>().transform.parent.gameObject.SetActive(false);
+        character.AddComponent<InfectionTimer>().BeginTimer();
     }
 
     /// <summary>
@@ -183,10 +180,10 @@ public class AdvancedHivemind : MonoBehaviour
     /// </summary>
     /// <param name="character"></param>
 	/// 
-	public void CallThisInfection ()
-	{
-		RemoveCharacter(currentCharacter);
-	}
+	public void CallThisInfection()
+    {
+        RemoveCharacter(currentCharacter);
+    }
     public void RemoveCharacter(GameObject character)
     {
         hivemind.RemoveAll(i => i.Character == character);
@@ -199,11 +196,16 @@ public class AdvancedHivemind : MonoBehaviour
         Destroy(character);
     }
 
+    public GameObject GetCurrentlyActiveCharacter()
+    {
+        return currentCharacter;
+    }
+
     void FindNextAvailableCharacter()
     {
         if (hivemind.Count < 1)
         {
-			StartCoroutine (GameOver ());
+            StartCoroutine(GameOver());
             return;
         }
         else if (hivemind.Count == 1)
@@ -227,17 +229,17 @@ public class AdvancedHivemind : MonoBehaviour
     IEnumerator GameOver()
     {
         Debug.Log("GAME OVER. HIVEMIND IS DEAD.");
-		FindObjectOfType<DebugDisplay>().SetText("Out of hosts. You are dead!");
-		yield return new WaitForSeconds (5);
+        FindObjectOfType<DebugDisplay>().SetText("Out of hosts. You are dead!");
+        yield return new WaitForSeconds(5);
         Destroy(gameObject);
     }
 
     void OnDestroy()
     {
-        if (instance = this)
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //if (instance = this)
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-		Application.LoadLevel (0);
+            //Application.LoadLevel(2);
 
     }
 
