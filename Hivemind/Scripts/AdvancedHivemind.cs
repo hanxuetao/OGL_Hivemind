@@ -77,7 +77,20 @@ public class AdvancedHivemind : MonoBehaviour
 
     void Update()
     {
-        // Mouse scrollwheel (changes character), no console key yet
+        // Tab for changing character
+        if (Input.GetKeyDown(KeyCode.Tab) && !diagUI.dialogue.isLoaded)
+        {
+            if (hivemind.Count < 2) return;
+
+            if (currentCharacterIndex < hivemind.Count - 1) currentCharacterIndex++;
+            else currentCharacterIndex = 0;
+
+            SwitchCharacter();
+            FindObjectOfType<DebugDisplay>().SetText("Currently controlling\n" + currentCharacter.name);
+        }
+
+        /*
+        // Mouse scrollwheel for changing character, OLD 
         scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0 && !diagUI.dialogue.isLoaded)
         {
@@ -99,6 +112,7 @@ public class AdvancedHivemind : MonoBehaviour
             SwitchCharacter();
             FindObjectOfType<DebugDisplay>().SetText("Currently controlling\n" + currentCharacter.name);
         }
+        */
     }
 
 

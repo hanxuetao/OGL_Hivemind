@@ -19,7 +19,7 @@ public class RayNPC : MonoBehaviour {
         Chasing
     }
 
-    RandomComment comment;
+    public RandomComment comment;
     RayMovement rayMovement;
     State currentState = State.Idle;
     
@@ -34,7 +34,7 @@ public class RayNPC : MonoBehaviour {
 
     void Start()
     {
-        comment = GetComponentInChildren<RandomComment>();
+        if (comment == null) comment = GetComponentInChildren<RandomComment>(true);
         comment.transform.parent.gameObject.SetActive(false);
     }
 

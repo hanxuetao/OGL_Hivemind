@@ -9,11 +9,13 @@ public class CharacterPair
     public GameObject Ghost;
     public SpriteRenderer OriginalSR;
     public SpriteRenderer GhostSR;
+    public GameObject OriginalCommentBox;
+    public GameObject GhostCommentBox;
 }
 
 public class GhostManager : MonoBehaviour {
-    
-    public GameObject background;
+
+    public GameObject commentBoxPrefab;
     public List<CharacterPair> characters = new List<CharacterPair>();
     
     float bgWidth;
@@ -21,10 +23,12 @@ public class GhostManager : MonoBehaviour {
 	void Start ()
     {
         // Get width of the level's background
-        bgWidth = background.GetComponent<BackgroundGenerator>().GetBackgroundWidth();
+        bgWidth = FindObjectOfType<BackgroundGenerator>().GetBackgroundWidth();
         
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("NPC"))
         {
+            if (go.transform.parent.tag == "NPC") continue;
+
             GameObject ghost = new GameObject("Ghost " + go.name);
             ghost.tag = "NPC";
 
@@ -39,6 +43,8 @@ public class GhostManager : MonoBehaviour {
             ghostBC.size = originalBC.size;
             ghostBC.offset = originalBC.offset;
 
+            GameObject ghostComment = (GameObject)Instantiate(commentBoxPrefab, ghost.transform, false);
+
             // Add the original-ghost pair to list
             characters.Add(
                 new CharacterPair {
@@ -46,7 +52,9 @@ public class GhostManager : MonoBehaviour {
                     Original = go,
                     Ghost = ghost,
                     OriginalSR = go.GetComponentInChildren<SpriteRenderer>(),
-                    GhostSR = ghostSR
+                    GhostSR = ghostSR,
+                    OriginalCommentBox = go.GetComponentInChildren<RandomComment>().transform.parent.gameObject,
+                    GhostCommentBox = ghostComment
                 }
             );
         }
@@ -85,6 +93,8 @@ public class GhostManager : MonoBehaviour {
 
             // Update the ghost's look direction to match the original's
             character.GhostSR.flipX = character.OriginalSR.flipX;
+
+            //character.GhostCommentBox.SetActive(character.OriginalCommentBox.activeInHierarchy);
         }
 
     }
