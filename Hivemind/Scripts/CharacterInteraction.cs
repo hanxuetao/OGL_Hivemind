@@ -99,6 +99,8 @@ public class CharacterInteraction : MonoBehaviour
                         discussionPartner = hit.collider.gameObject;
                     }
 
+                    if (!discussionPartner.GetComponent<VIDE_Assign>()) return;
+
                     discussionPartnerRM = discussionPartner.GetComponent<RayMovement>();
                     discussionPartnerRNPC = discussionPartner.GetComponent<RayNPC>();
                     isControlledNPC = discussionPartner.GetComponent<NPCControl>();
@@ -133,5 +135,11 @@ public class CharacterInteraction : MonoBehaviour
         }
         diagUI.npcName.text = discussionPartner.name;
 
+    }
+
+    void OnDestroy()
+    {
+        if (diagUI && diagUI.dialogue)
+            diagUI.dialogue.EndDialogue();
     }
 }
