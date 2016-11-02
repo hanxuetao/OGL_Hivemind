@@ -18,6 +18,7 @@ public class RayPlayerInput : MonoBehaviour {
     GameObject triggerIndicator;
     GameObject ui;
 
+    Cameras cameras;
     RayMovement rayMovement;
     CharacterInteraction characterInteraction;
 
@@ -31,6 +32,8 @@ public class RayPlayerInput : MonoBehaviour {
 
         ui = GameObject.FindGameObjectWithTag("UI");
         triggerIndicator = ui.transform.FindChild("TriggerIndicator").gameObject;
+
+        cameras = FindObjectOfType<Cameras>();
     }
 	
 	void Update ()
@@ -54,6 +57,19 @@ public class RayPlayerInput : MonoBehaviour {
 
         // Running (hard coded key for now)
         rayMovement.Run = Input.GetKey(KeyCode.LeftShift);
+
+        if (rayMovement.Run) cameras.SetRunXOffset((int)rayMovement.CharacterInput.x);
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            cameras.ActivateRunCamera(true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            cameras.ActivateRunCamera(false);
+            cameras.offsetX = 0;
+        }
 
         // Trigger activation (hard coded key for now)
         if (Input.GetKeyDown(KeyCode.F) && inTrigger != null)

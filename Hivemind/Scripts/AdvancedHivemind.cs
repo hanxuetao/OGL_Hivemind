@@ -164,6 +164,8 @@ public class AdvancedHivemind : MonoBehaviour
 
         currentCharacter.GetComponent<RayPlayerInput>().enabled = true;
         currentCharacter.GetComponent<CharacterInteraction>().enabled = true;
+        if (currentCharacter.GetComponentInChildren<RandomComment>())
+        currentCharacter.GetComponentInChildren<RandomComment>().transform.parent.gameObject.SetActive(false);
 
         ui.transform.FindChild("TriggerIndicator").gameObject.SetActive(false);
 
@@ -242,6 +244,7 @@ public class AdvancedHivemind : MonoBehaviour
 
     IEnumerator GameOver()
     {
+        FindObjectOfType<Cameras>().transform.SetParent(null);
         Debug.Log("GAME OVER. HIVEMIND IS DEAD.");
         FindObjectOfType<DebugDisplay>().SetText("Out of hosts. You are dead!");
         yield return new WaitForSeconds(5);

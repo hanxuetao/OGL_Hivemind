@@ -35,7 +35,7 @@ public class DebugInput : MonoBehaviour {
         {
             rc = targetChar.GetComponent<RandomComment>();
             rm = targetChar.GetComponent<RayMovement>();
-            targetChar.GetComponent<RayNPC>().enableSimpleAI = false;
+            //targetChar.GetComponent<RayNPC>().enableSimpleAI = false;
         }
     }
 
@@ -65,9 +65,18 @@ public class DebugInput : MonoBehaviour {
             if (Input.GetKey(keyMoveTargetCharLeft)) dir = -1;
             else if (Input.GetKey(keyMoveTargetCharRight)) dir = 1;
             else dir = 0;
+            
+            if (dir != 0)
+            {
+                if (targetChar.GetComponent<RayNPC>().enableSimpleAI)
+                    targetChar.GetComponent<RayNPC>().enableSimpleAI = false;
+            }
 
-            rm.CharacterInput = new Vector2(dir, 0);
-            rm.Run = Input.GetKey(keyRunWithTargetChar);
+            if (!targetChar.GetComponent<RayNPC>().enableSimpleAI)
+            {
+                rm.CharacterInput = new Vector2(dir, 0);
+                rm.Run = Input.GetKey(keyRunWithTargetChar);
+            }
         }
 
         if (Input.GetKeyDown(keySpawnRandomCharacter))

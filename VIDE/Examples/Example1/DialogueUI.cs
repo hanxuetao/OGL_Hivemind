@@ -170,7 +170,9 @@ public class DialogueUI : MonoBehaviour
             GameObject newOp = Instantiate(playerText.gameObject, playerText.transform.position, Quaternion.identity) as GameObject;
             newOp.SetActive(true);
             newOp.transform.SetParent(playerText.transform.parent, true);
-            newOp.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 20 - (20 * i));
+            //newOp.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 20 - (20 * i));
+            newOp.GetComponent<RectTransform>().anchoredPosition = new Vector2(playerText.GetComponent<RectTransform>().anchoredPosition.x, playerText.GetComponent<RectTransform>().anchoredPosition.y + (-25 * i));
+            newOp.GetComponent<RectTransform>().localScale = Vector3.one;
             newOp.GetComponent<UnityEngine.UI.Text>().text = opts[i];
             currentOptions.Add(newOp.GetComponent<UnityEngine.UI.Text>());
         }

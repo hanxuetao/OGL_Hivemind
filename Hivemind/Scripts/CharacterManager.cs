@@ -33,7 +33,7 @@ public class CharacterManager : MonoBehaviour {
 
     public GameObject SpawnCharacter(Character character, Vector3 position = default(Vector3))
     {
-        Vector3 spawnPosition = new Vector3(0f,-4f, 0f);
+        Vector3 spawnPosition = new Vector3(0f,-5f, 0f);
 
         if (position != default(Vector3))
         {
@@ -65,6 +65,7 @@ public class CharacterManager : MonoBehaviour {
             rnpc.SetAIBehaviourActive(true);
             rpi.enabled = false;
             ci.enabled = false;
+            go.tag = "NPC";
         }
         else
         {
