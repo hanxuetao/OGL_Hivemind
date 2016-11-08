@@ -64,10 +64,10 @@ Shader "Custom/2D World Bend"
 				//vv.xyz -= _WorldSpaceCameraPos.xyz;
 
 				////Curvature and taper effects are calculated here
-				////vv = float4(((vv.x * vv.y) * _Curvature), (vv.x * vv.x) * -_Curvature, 0.0f, 0.0f );
+				//vv = float4(((vv.x * vv.y) * _Curvature), (vv.x * vv.x) * -_Curvature, 0.0f, 0.0f );
 
 				////Use this instead if you don't want the taper effect
-				//vv = float4( 0.0f, (vv.x * vv.x) * - _Curvature, 0.0f, 0.0f );
+				////vv = float4( 0.0f, (vv.x * vv.x) * - _Curvature, 0.0f, 0.0f );
 
 				//OUT.vertex = mul(UNITY_MATRIX_MVP, v.vertex) + mul(unity_WorldToObject, vv);
 				//OUT.uv = v.uv;
@@ -122,6 +122,7 @@ Shader "Custom/2D World Bend"
 			{
 				//fixed4 col = tex2D(_MainTex, pow(i.uv,2));
 
+				//float sine = abs(0.5 - i.vertex.x) * 0.001;
 				float sine = sin(i.vertex.x * _Frequency) * _Amplitude;
 				fixed4 col = tex2D(_MainTex, i.uv + float2(0, sine));
 

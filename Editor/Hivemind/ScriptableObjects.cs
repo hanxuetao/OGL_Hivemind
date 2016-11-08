@@ -257,19 +257,19 @@ public class CharacterEditor : EditorWindow
                     GUILayout.Space(10);
                     characters.allCharacters[viewIndex - 1].characterName = EditorGUILayout.TextField("Character Name", characters.allCharacters[viewIndex - 1].characterName as string);
                     characters.allCharacters[viewIndex - 1].spawnFloor = EditorGUILayout.IntSlider("Spawn Floor", characters.allCharacters[viewIndex - 1].spawnFloor, 0, 100);
-                    characters.allCharacters[viewIndex - 1].currentFloor = EditorGUILayout.IntSlider("Current Floor", characters.allCharacters[viewIndex - 1].currentFloor, 0, 100);
+                    //characters.allCharacters[viewIndex - 1].currentFloor = EditorGUILayout.IntSlider("Current Floor", characters.allCharacters[viewIndex - 1].currentFloor, 0, 100);
                     characters.allCharacters[viewIndex - 1].authorization = EditorGUILayout.TextField("Authorization", characters.allCharacters[viewIndex - 1].authorization as string);
                     characters.allCharacters[viewIndex - 1].priority = EditorGUILayout.IntField("Priority", characters.allCharacters[viewIndex - 1].priority);
+                    characters.allCharacters[viewIndex - 1].infectionStageDuration = EditorGUILayout.IntField("Infection Stage Duration", characters.allCharacters[viewIndex - 1].infectionStageDuration);
                     characters.allCharacters[viewIndex - 1].animator = EditorGUILayout.ObjectField("Animator", characters.allCharacters[viewIndex - 1].animator, typeof(RuntimeAnimatorController), true) as RuntimeAnimatorController;
-                    characters.allCharacters[viewIndex - 1].isNPC = EditorGUILayout.Toggle("Is Non-Playable Character", characters.allCharacters[viewIndex - 1].isNPC);
+                    characters.allCharacters[viewIndex - 1].isOriginallyNPC = EditorGUILayout.Toggle("Is NPC At Start", characters.allCharacters[viewIndex - 1].isOriginallyNPC);
+                    //characters.allCharacters[viewIndex - 1].isOriginallyInfected = EditorGUILayout.Toggle("Is Infected At Start", characters.allCharacters[viewIndex - 1].isOriginallyInfected);
                     characters.allCharacters[viewIndex - 1].isInteractable = EditorGUILayout.Toggle("Is Interactable", characters.allCharacters[viewIndex - 1].isInteractable);
                     characters.allCharacters[viewIndex - 1].isInfectable = EditorGUILayout.Toggle("Is Infectable", characters.allCharacters[viewIndex - 1].isInfectable);
-                    characters.allCharacters[viewIndex - 1].isInfected = EditorGUILayout.Toggle("Is Infected", characters.allCharacters[viewIndex - 1].isInfected);
                     characters.allCharacters[viewIndex - 1].isInanimateObject = EditorGUILayout.Toggle("Is Inanimate Object", characters.allCharacters[viewIndex - 1].isInanimateObject);
-                    characters.allCharacters[viewIndex - 1].gender = (Character.Gender)EditorGUILayout.EnumPopup("Gender", characters.allCharacters[viewIndex - 1].gender);
-                    characters.allCharacters[viewIndex - 1].currentStateOfInfection = (Character.InfectionState)EditorGUILayout.EnumPopup("State Of Infection", characters.allCharacters[viewIndex - 1].currentStateOfInfection);
-                    characters.allCharacters[viewIndex - 1].currentStateOfSuspicion = (Character.SuspicionState)EditorGUILayout.EnumPopup("State Of Suspicion", characters.allCharacters[viewIndex - 1].currentStateOfSuspicion);
-
+                    characters.allCharacters[viewIndex - 1].gender = (CharacterEnums.Gender)EditorGUILayout.EnumPopup("Gender", characters.allCharacters[viewIndex - 1].gender);
+                    //characters.allCharacters[viewIndex - 1].currentStateOfInfection = (Character.InfectionState)EditorGUILayout.EnumPopup("State Of Infection", characters.allCharacters[viewIndex - 1].currentStateOfInfection);
+                    //characters.allCharacters[viewIndex - 1].currentStateOfSuspicion = (Character.SuspicionState)EditorGUILayout.EnumPopup("State Of Suspicion", characters.allCharacters[viewIndex - 1].currentStateOfSuspicion);
 
                     GUILayout.BeginHorizontal();
                     if (dialogues.Count > 0)
@@ -290,6 +290,9 @@ public class CharacterEditor : EditorWindow
 
                     }
                     GUILayout.EndHorizontal();
+
+                    characters.allCharacters[viewIndex - 1].characterPoseSprite = EditorGUILayout.ObjectField("Standing pose sprite", characters.allCharacters[viewIndex - 1].characterPoseSprite, typeof(Sprite), false, GUILayout.ExpandWidth(false)) as Sprite;
+                    characters.allCharacters[viewIndex - 1].characterDialogSprite = EditorGUILayout.ObjectField("Dialog sprite", characters.allCharacters[viewIndex - 1].characterDialogSprite, typeof(Sprite), false, GUILayout.ExpandWidth(false)) as Sprite;
 
                     GUILayout.Space(25);
                 }

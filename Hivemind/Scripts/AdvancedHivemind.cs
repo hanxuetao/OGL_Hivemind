@@ -16,6 +16,7 @@ public class InfectedCharacter
 
 public class AdvancedHivemind : MonoBehaviour
 {
+
     public GameObject ui;
 
     GameObject currentCharacter;
@@ -23,7 +24,7 @@ public class AdvancedHivemind : MonoBehaviour
     float scroll = 0;
 
     public List<InfectedCharacter> hivemind = new List<InfectedCharacter>();
-    Cameras cameraManager;
+    //Cameras cameraManager;
     DialogueUI diagUI;
 
     // Singleton
@@ -36,6 +37,10 @@ public class AdvancedHivemind : MonoBehaviour
 
     void Start()
     {
+        // Finds stuff
+        if (ui == null) ui = GameObject.FindGameObjectWithTag("UI");
+        if (diagUI == null) diagUI = FindObjectOfType<DialogueUI>();
+
         // Checking for existing singleton
         if (instance != null)
         {
@@ -55,9 +60,11 @@ public class AdvancedHivemind : MonoBehaviour
 #endif
         }
 
+        if (hivemind.Count <= 0) return;
+
         // Sets the currently active character
         currentCharacter = hivemind[currentCharacterIndex].Character;
-        currentCharacter.AddComponent<InfectionTimer>().BeginTimer();
+        //currentCharacter.AddComponent<InfectionTimer>().BeginTimer();
         DisableOthers();
 
         // Disable input for every character except the first one
@@ -67,12 +74,8 @@ public class AdvancedHivemind : MonoBehaviour
         }
 
         // Gets the camera manager
-        cameraManager = Camera.main.transform.parent.gameObject.GetComponent<Cameras>();
-        cameraManager.target = currentCharacter.transform;
-
-        // Finds stuff
-        if (ui == null) ui = GameObject.FindGameObjectWithTag("UI");
-        if (diagUI == null) diagUI = FindObjectOfType<DialogueUI>();
+        //cameraManager = Camera.main.transform.parent.gameObject.GetComponent<Cameras>();
+        //cameraManager.target = currentCharacter.transform;
     }
 
     void Update()
@@ -164,10 +167,12 @@ public class AdvancedHivemind : MonoBehaviour
 
         currentCharacter.GetComponent<RayPlayerInput>().enabled = true;
         currentCharacter.GetComponent<CharacterInteraction>().enabled = true;
+        if (currentCharacter.GetComponentInChildren<RandomComment>())
+            currentCharacter.GetComponentInChildren<RandomComment>().transform.parent.gameObject.SetActive(false);
 
         ui.transform.FindChild("TriggerIndicator").gameObject.SetActive(false);
 
-        cameraManager.ChangeTarget(currentCharacter);
+        //cameraManager.ChangeTarget(currentCharacter);
     }
 
     /// <summary>
@@ -176,17 +181,19 @@ public class AdvancedHivemind : MonoBehaviour
     /// <param name="character"></param>
     public void AddCharacter(GameObject character)
     {
-#if UNITY_5_3_OR_NEWER
-        hivemind.Add(new InfectedCharacter() { Character = character, Floor = SceneManager.GetActiveScene().buildIndex, InPlayerControl = false, Life = 100 });
-#else
-        hivemind.Add(new InfectedCharacter() { Character = character, Floor = Application.loadedLevel, InPlayerControl = false, Life = 100 });
-#endif
-        character.transform.parent = gameObject.transform;
-        character.GetComponent<RayPlayerInput>().enabled = false;
-        character.GetComponent<RayNPC>().enabled = false;
-        if (character.GetComponentInChildren<RandomComment>())
-            character.GetComponentInChildren<RandomComment>().transform.parent.gameObject.SetActive(false);
-        character.AddComponent<InfectionTimer>().BeginTimer();
+//#if UNITY_5_3_OR_NEWER
+//        hivemind.Add(new InfectedCharacter() { Character = character, Floor = SceneManager.GetActiveScene().buildIndex, InPlayerControl = false, Life = 100 });
+//#else
+//        hivemind.Add(new InfectedCharacter() { Character = character, Floor = Application.loadedLevel, InPlayerControl = false, Life = 100 });
+//#endif
+//        character.transform.parent = gameObject.transform;
+//        character.GetComponent<RayPlayerInput>().enabled = false;
+//        character.GetComponent<RayNPC>().enabled = false;
+//        if (character.GetComponentInChildren<RandomComment>())
+//            character.GetComponentInChildren<RandomComment>().transform.parent.gameObject.SetActive(false);
+        //character.AddComponent<InfectionTimer>().BeginTimer();
+
+        CharacterManager.InfectCharacter(character);
     }
 
     /// <summary>
@@ -242,6 +249,7 @@ public class AdvancedHivemind : MonoBehaviour
 
     IEnumerator GameOver()
     {
+        //FindObjectOfType<CameraController>().transform.SetParent(null);
         Debug.Log("GAME OVER. HIVEMIND IS DEAD.");
         FindObjectOfType<DebugDisplay>().SetText("Out of hosts. You are dead!");
         yield return new WaitForSeconds(5);
@@ -251,9 +259,9 @@ public class AdvancedHivemind : MonoBehaviour
     void OnDestroy()
     {
         //if (instance = this)
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-            //Application.LoadLevel(2);
+        //Application.LoadLevel(2);
 
     }
 

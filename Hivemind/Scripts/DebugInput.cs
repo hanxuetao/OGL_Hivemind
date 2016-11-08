@@ -25,17 +25,17 @@ public class DebugInput : MonoBehaviour {
 
     RandomComment rc;
     RayMovement rm;
-    AdvancedHivemind hivemind;
+    //AdvancedHivemind hivemind;
     int commentNum = 0;
     int dir;
         
 	void Start () {
-        hivemind = FindObjectOfType<AdvancedHivemind>();
+        //hivemind = FindObjectOfType<AdvancedHivemind>();
         if (targetChar)
         {
             rc = targetChar.GetComponent<RandomComment>();
             rm = targetChar.GetComponent<RayMovement>();
-            targetChar.GetComponent<RayNPC>().enableSimpleAI = false;
+            //targetChar.GetComponent<RayNPC>().enableSimpleAI = false;
         }
     }
 
@@ -43,7 +43,8 @@ public class DebugInput : MonoBehaviour {
     void Update () {
         if (Input.GetKeyDown(keyKillCurrentCharacter))
         {
-            hivemind.RemoveCharacter(hivemind.GetCurrentlyActiveCharacter());
+            //hivemind.RemoveCharacter(hivemind.GetCurrentlyActiveCharacter());
+            CharacterManager.KillCharacter(CharacterManager.GetCurrentCharacterEntity());
         }
 
         if (targetChar)
@@ -65,9 +66,27 @@ public class DebugInput : MonoBehaviour {
             if (Input.GetKey(keyMoveTargetCharLeft)) dir = -1;
             else if (Input.GetKey(keyMoveTargetCharRight)) dir = 1;
             else dir = 0;
+            
+            if (dir != 0)
+            {
+                if (targetChar.GetComponent<RayNPC>().enableSimpleAI)
+                    targetChar.GetComponent<RayNPC>().enableSimpleAI = false;
+            }
 
-            rm.CharacterInput = new Vector2(dir, 0);
-            rm.Run = Input.GetKey(keyRunWithTargetChar);
+            if (!targetChar.GetComponent<RayNPC>().enableSimpleAI)
+            {
+                rm.CharacterInput = new Vector2(dir, 0);
+                rm.Run = Input.GetKey(keyRunWithTargetChar);
+            }
+        }
+        else
+        {
+            targetChar = CharacterManager.instance.allCharacters[Random.Range(1, CharacterManager.instance.allCharacters.Count)].GetGameObject();
+            if (targetChar)
+            {
+                rc = targetChar.GetComponent<RandomComment>();
+                rm = targetChar.GetComponent<RayMovement>();
+            }
         }
 
         if (Input.GetKeyDown(keySpawnRandomCharacter))
@@ -85,14 +104,22 @@ public class DebugInput : MonoBehaviour {
                 SpawnRandomCharacter(false);
             }
         }
+
+        float delta = Input.GetAxisRaw("Mouse ScrollWheel");
+
+        if (delta != 0)
+        {
+            FindObjectOfType<CameraController>().ChangeZoomLevelInstant(-delta);
+        }
     }
 #endif
     
     public void SpawnRandomCharacter(bool onCurrentCharacter)
     {
-        CharacterManager.instance.SpawnCharacter(
-            listOfCharacters.allCharacters[Random.Range(0, listOfCharacters.allCharacters.Count)],
-            onCurrentCharacter ? transform.position : Vector3.zero
+        float bgWidth = FindObjectOfType<BackgroundGenerator>().GetBackgroundWidth();
+        CharacterManager.SpawnCharacter(
+            listOfCharacters.allCharacters[Random.Range(1, listOfCharacters.allCharacters.Count)],
+            onCurrentCharacter ? CharacterManager.GetCurrentCharacterEntity().GetGameObject().transform.position : new Vector3(Random.Range(-bgWidth / 2, bgWidth / 2), 0, 0)
         );
 
         //Character character = listOfCharacters.allCharacters[Random.Range(0, listOfCharacters.allCharacters.Count)];
@@ -148,6 +175,7 @@ public class DebugInput : MonoBehaviour {
 
     public void WarpTargetToCurrent()
     {
-        targetChar.transform.position = hivemind.GetCurrentlyActiveCharacter().transform.position;
+        //targetChar.transform.position = hivemind.GetCurrentlyActiveCharacter().transform.position;
+        targetChar.transform.position = CharacterManager.GetCurrentCharacterEntity().GetGameObject().transform.position;
     }
 }

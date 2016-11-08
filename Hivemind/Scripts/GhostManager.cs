@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class CharacterPair
@@ -94,7 +95,8 @@ public class GhostManager : MonoBehaviour {
             // Update the ghost's look direction to match the original's
             character.GhostSR.flipX = character.OriginalSR.flipX;
 
-            //character.GhostCommentBox.SetActive(character.OriginalCommentBox.activeInHierarchy);
+            character.GhostCommentBox.SetActive(character.OriginalCommentBox.activeInHierarchy);
+            character.GhostCommentBox.GetComponentInChildren<Text>().text = character.OriginalCommentBox.GetComponentInChildren<Text>().text;
         }
 
     }
