@@ -2,6 +2,8 @@
 
 public class DebugInput : MonoBehaviour {
 
+    public bool allowCameraZoom = false;
+
     [HideInInspector]
     public string keyKillCurrentCharacter = "0";
     [HideInInspector]
@@ -107,7 +109,7 @@ public class DebugInput : MonoBehaviour {
 
         float delta = Input.GetAxisRaw("Mouse ScrollWheel");
 
-        if (delta != 0)
+        if (delta != 0 && allowCameraZoom)
         {
             FindObjectOfType<CameraController>().ChangeZoomLevelInstant(-delta);
         }

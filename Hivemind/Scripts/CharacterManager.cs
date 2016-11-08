@@ -33,8 +33,20 @@ public class CharacterManager : MonoBehaviour {
     // Checks if allCharacters has been initialized
     bool initialized;
 
+    // Checks if first timer tick has passed
+    bool firstTimerTickPassed;
+
     public delegate void CurrentCharacterChange();
     public static event CurrentCharacterChange OnCharacterChange;
+
+    public delegate void InfectionAdvance();
+    public static event InfectionAdvance OnInfectionAdvance;
+
+    public delegate void NewInfectedCharacter(Entity e);
+    public static event NewInfectedCharacter OnNewInfectedCharacter;
+
+    public delegate void CharacterDeath(int i);
+    public static event CharacterDeath OnCharacterDeath;
 
     /////////////////////////////
     /// MonoBehaviour Methods ///
@@ -121,6 +133,13 @@ public class CharacterManager : MonoBehaviour {
             if (infectedCharacters.Count <= 0) StopCoroutine(InfectionTimer());
 
             Debug.Log("Infection timer tick");
+
+            // If first tick, which happens too early because of no delay, does not advance timers
+            if (!firstTimerTickPassed)
+            {
+                firstTimerTickPassed = true;
+                yield return new WaitForSeconds(1f);
+            }
             
             for (int i = 0; i < infectedCharacters.Count; i++)
             {
@@ -133,14 +152,23 @@ public class CharacterManager : MonoBehaviour {
                     {
                         e.currentInfectionStageDuration = e.character.infectionStageDuration;
                         e.currentStateOfInfection++;
-                        FindObjectOfType<DebugDisplay>().SetText(e.character.characterName + "'s infection is advancing...");
+
+                        if (e == currentCharacter.GetComponent<Entity>())
+                            FindObjectOfType<DebugDisplay>().SetText(e.character.characterName + "'s infection is advancing...");
                     }
                     else
                     {
-                        FindObjectOfType<DebugDisplay>().SetText(e.character.characterName + "'s infection got the best of " + ((e.character.gender.ToString() == "Male") ? "him." : "her."));
+                        if (e == currentCharacter.GetComponent<Entity>())
+                            FindObjectOfType<DebugDisplay>().SetText(e.character.characterName + "'s infection got the best of " + ((e.character.gender.ToString() == "Male") ? "him." : "her."));
+
                         KillCharacter(e);
                     }
                 }
+            }
+
+            if (OnInfectionAdvance != null)
+            {
+                OnInfectionAdvance();
             }
 
             yield return new WaitForSeconds(1f);
@@ -185,6 +213,7 @@ public class CharacterManager : MonoBehaviour {
         {
             go.GetComponent<VIDE_Assign>().assignedDialogue = allCharacters[indexOfEntity].character.VideConversation;
             go.GetComponent<VIDE_Assign>().assignedIndex = allCharacters[indexOfEntity].character.VideConversationIndex;
+            go.GetComponent<VIDE_Assign>().dialogueName = allCharacters[indexOfEntity].character.VideConversation.ToString();
         }
 
         // If animator is set, gives it to the spawned character
@@ -230,6 +259,10 @@ public class CharacterManager : MonoBehaviour {
             if (allCharacters[indexOfEntity].currentStateOfInfection == CharacterEnums.InfectionState.None)
             {
                 allCharacters[indexOfEntity].currentStateOfInfection = CharacterEnums.InfectionState.State1;
+            }
+            if (OnNewInfectedCharacter != null)
+            {
+                OnNewInfectedCharacter(allCharacters[indexOfEntity]);
             }
         }
 
@@ -352,6 +385,11 @@ public class CharacterManager : MonoBehaviour {
             character.GetComponent<RayNPC>().enabled = false;
             character.GetComponent<RayPlayerInput>().enabled = false;
             character.GetComponent<CharacterInteraction>().enabled = false;
+            
+            if (OnNewInfectedCharacter != null)
+            {
+                OnNewInfectedCharacter(e);
+            }
         }
         else
         {
@@ -465,6 +503,10 @@ public class CharacterManager : MonoBehaviour {
             instance.charactersOnLevel.Remove(entity);
             if (instance.infectedCharacters.Contains(entity))
             {
+                if (OnCharacterDeath != null)
+                {
+                    OnCharacterDeath(instance.infectedCharacters.IndexOf(entity));
+                }
                 instance.infectedCharacters.Remove(entity);
             }
             entity.Die();
