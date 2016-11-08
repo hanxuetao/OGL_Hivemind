@@ -62,6 +62,8 @@ public class RayPlayerInput : MonoBehaviour {
         if (rayMovement.Run) cameras.SetRunXOffset((int)rayMovement.CharacterInput.x);
 
         // If run is pressed down, activates run camera
+
+
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             cameras.ActivateRunCamera(true);
