@@ -22,6 +22,8 @@ public class RayPlayerInput : MonoBehaviour {
     RayMovement rayMovement;
     CharacterInteraction characterInteraction;
 
+    float facingDirection = 1;
+
     // Use this for initialization
     void Start () {
 	    if (!sporeShotSource)
@@ -52,19 +54,25 @@ public class RayPlayerInput : MonoBehaviour {
         // Horizontal & vertical movement
         rayMovement.CharacterInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
+        if (rayMovement.CharacterInput != Vector2.zero)
+            facingDirection = Mathf.Sign(rayMovement.CharacterInput.x);
+
         // Jumping (hard coded key for now)
         rayMovement.Jump = Input.GetKeyDown(KeyCode.Space); // GetKey() enables bunny hopping
 
         // Running (hard coded key for now)
         rayMovement.Run = Input.GetKey(KeyCode.LeftShift);
 
-        // If running, sets camera's x offset
-        if (rayMovement.Run) cameras.SetRunXOffset((int)rayMovement.CharacterInput.x);
-
-        // If run is pressed down, activates run camera
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (rayMovement.CharacterInput != Vector2.zero)
         {
-            cameras.ActivateRunCamera(true);
+            // If running, sets camera's x offset
+            if (rayMovement.Run) cameras.SetRunXOffset((int)rayMovement.CharacterInput.x);
+
+            // If run is pressed down, activates run camera
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                cameras.ActivateRunCamera(true);
+            }
         }
 
         // If run button is released, deactivates run camera and x offset
@@ -115,17 +123,19 @@ public class RayPlayerInput : MonoBehaviour {
     void Shoot()
     {
         // Gets mouse position from screen
-        Vector2 target = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-        Vector2 myPos = new Vector2(sporeShotSource.transform.position.x, sporeShotSource.transform.position.y);
+        //Vector2 target = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+        //Vector2 myPos = new Vector2(sporeShotSource.transform.position.x, sporeShotSource.transform.position.y);
 
         // Creates the projectile
-        shot = (GameObject)Instantiate(projectile, sporeShotSource.transform.position, Quaternion.identity);
+        Debug.Log("Facing " + facingDirection);
+
+        shot = (GameObject)Instantiate(projectile, sporeShotSource.transform.position, Quaternion.Euler(new Vector3(0, facingDirection > 0 ? 0 : 180, 0)));
 
         // Uses object pool to spawn a projectile
         //shot = ObjectPool.current.Spawn(projectile, sporeShotSource.transform.position, Quaternion.identity);
 
         //  Sets projectile's direction towards the mouse position
-        shot.GetComponent<SporeShot>().SetDirection(target - myPos);
+        //shot.GetComponent<SporeShot>().SetDirection(target - myPos);
     }
 
     void OnTriggerExit2D(Collider2D col)
