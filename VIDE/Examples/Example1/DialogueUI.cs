@@ -17,6 +17,7 @@ public class DialogueUI : MonoBehaviour
     public UnityEngine.UI.Text playerText;
     public GameObject itemText;
     public GameObject uiContainer;
+    public UnityEngine.UI.Image dialogImage;
 	
 	//We'll use these later
     bool gotItem = false;

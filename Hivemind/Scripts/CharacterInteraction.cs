@@ -123,6 +123,9 @@ public class CharacterInteraction : MonoBehaviour
         //Lets grab the NPC's DialogueAssign script...
         VIDE_Assign assigned = discussionPartner.GetComponent<VIDE_Assign>();
 
+        Sprite player = discussionPartner.GetComponent<Entity>().character.characterDialogSprite;
+        Sprite NPC = GetComponent<Entity>().character.characterDialogSprite;
+
         if (!diagUI.dialogue.isLoaded)
         {
             //... and use it to begin the conversation
@@ -133,8 +136,22 @@ public class CharacterInteraction : MonoBehaviour
             //If conversation already began, let's just progress through it
             diagUI.NextNode();
         }
-        diagUI.npcName.text = discussionPartner.name;
 
+        if (diagUI.dialogue.nodeData.currentIsPlayer)
+        {
+            diagUI.dialogImage.sprite = NPC;
+            diagUI.dialogImage.transform.SetAsFirstSibling();
+            diagUI.dialogImage.rectTransform.localScale = Vector3.one;
+        }
+        else
+        {
+            diagUI.dialogImage.sprite = player;
+            diagUI.dialogImage.transform.SetAsLastSibling();
+            diagUI.dialogImage.rectTransform.localScale = new Vector3(-1, 1, 1);
+        }
+        
+
+        diagUI.npcName.text = discussionPartner.name;
     }
 
     void OnDestroy()
