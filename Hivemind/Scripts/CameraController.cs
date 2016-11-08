@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Cameras : MonoBehaviour {
+public class CameraController : MonoBehaviour {
     
     public GameObject background;
     public Transform target;
@@ -55,25 +55,46 @@ public class Cameras : MonoBehaviour {
         mainCamera.localPosition = new Vector3(0, mainCamera.localPosition.y, offsetZ);
         supportCamera.localPosition = new Vector3(width, supportCamera.localPosition.y, offsetZ);
 
-        transform.SetParent(target);
+        // If target is set, sets target to parent object
+        if (target)
+            transform.SetParent(target);
+
+        // Subscribe to character manager's current character change event
+        CharacterManager.OnCharacterChange += CharacterManager_OnCharacterChange;
+    }
+
+    /// <summary>
+    /// Method to call when character gets changed in character manager.
+    /// </summary>
+    void CharacterManager_OnCharacterChange()
+    {
+        ChangeTarget(CharacterManager.GetCurrentCharacterObject());
     }
 
     void LateUpdate()
     {
-        if (!FindObjectOfType<AdvancedHivemind>()) return;
-        //if (target == null) target = FindObjectOfType<AdvancedHivemind>().hivemind[0].Character.transform;
-
+        // If target is not found/set
         if (!target)
         {
-            Camera.main.orthographicSize -= Time.deltaTime * 0.25f;
-            supportCamera.GetComponent<Camera>().orthographicSize -= Time.deltaTime * 0.25f;
-            return;
+            // Asks character manager to provide a new target
+            GameObject newTarget = CharacterManager.GetCurrentCharacterObject();
+
+            // If new target is found, changes target to it
+            if (newTarget)
+                ChangeTarget(newTarget);
+
+            // If target is still not set, begins zooming (can be commented away, it was just random thing for now)
+            if (!target)
+            {
+                Camera.main.orthographicSize -= Time.deltaTime * 0.25f;
+                supportCamera.GetComponent<Camera>().orthographicSize -= Time.deltaTime * 0.25f;
+                return;
+            }
         }
 
-        if (transform.position.x < -width / 2 || transform.position.y > width / 2)
-        {
-            //target.transform.position = 
-        }
+        //if (!FindObjectOfType<AdvancedHivemind>()) return;
+
+        //if (target == null) ChangeTarget(FindObjectOfType<AdvancedHivemind>().hivemind[0].Character);
 
         if (lockedToTarget && lockToTarget)
         {
@@ -118,21 +139,44 @@ public class Cameras : MonoBehaviour {
         }
     }
 
-    public void ChangeTargetSmooth(GameObject target, float cameraSpeed)
-    {
-        ChangeTarget(target);
-        cameraMoveSpeed = cameraSpeed;
-        actualDistanceForRelock = defaultDistanceForRelock / cameraMoveSpeed;
-    }
+    //public void ChangeTargetSmooth(GameObject target, float cameraSpeed)
+    //{
+    //    ChangeTarget(target);
+    //    cameraMoveSpeed = cameraSpeed;
+    //    actualDistanceForRelock = defaultDistanceForRelock / cameraMoveSpeed;
+    //}
 
+    //void SetTarget(Transform target)
+    //{
+    //    target.GetComponent<Entity>().OnDeath -= CameraController_OnDeath;
+    //    this.target = target;
+    //    target.GetComponent<Entity>().OnDeath += CameraController_OnDeath;
+    //}
+
+    //private void CameraController_OnDeath()
+    //{
+    //    if (target)
+    //        transform.SetParent(target);
+    //    else
+    //        transform.SetParent(null);
+    //}
+
+    /// <summary>
+    /// Changes target object of the camera to follow.
+    /// </summary>
+    /// <param name="target"></param>
     public void ChangeTarget(GameObject target)
     {
         lockedToTarget = false;
-        this.target = target.transform;
+        this.target = target.transform; //SetTarget(target.transform);
         newTargetPos = new Vector2(target.transform.position.x, target.transform.position.y + offsetY);
         transform.SetParent(this.target);
     }
 
+    /// <summary>
+    /// Changes x-axis offset for the camera towards wanted direction.
+    /// </summary>
+    /// <param name="direction">Chosen direction. -1 => left, 1 => right in x-axis.</param>
     public void SetRunXOffset(int direction)
     {
         //offsetX = Mathf.Sign(direction) * -runXOffset;
@@ -140,6 +184,10 @@ public class Cameras : MonoBehaviour {
         newTargetPos = new Vector2(target.transform.position.x + Mathf.Sign(direction) * runXOffset, target.transform.position.y + offsetY);
     }
 
+    /// <summary>
+    /// Activates/deactivates run camera with its zoom levels and offsets.
+    /// </summary>
+    /// <param name="value"></param>
     public void ActivateRunCamera(bool value)
     {
         if (zoomCoroutine != null) StopCoroutine(zoomCoroutine);
@@ -158,6 +206,12 @@ public class Cameras : MonoBehaviour {
         StartCoroutine(zoomCoroutine);
     }
 
+    /// <summary>
+    /// Changes camera zoom level over time to target value.
+    /// <para>Zoom level is set by changing the size of orthographic camera.</para>
+    /// </summary>
+    /// <param name="targetValue">New target value of the zoom level.</param>
+    /// <returns></returns>
     IEnumerator ChangeZoomLevel(float targetValue)
     {
         float beginningValue = mainCamera.GetComponent<Camera>().orthographicSize;
@@ -180,6 +234,13 @@ public class Cameras : MonoBehaviour {
                 yield return new WaitForSeconds(0.001f);
             }
         }
+    }
 
+    public void ChangeZoomLevelInstant(float direction)
+    {
+        float newZoomLevel = 0.5f * Mathf.Sign(direction);
+        mainCamera.GetComponent<Camera>().orthographicSize += newZoomLevel;
+        supportCamera.GetComponent<Camera>().orthographicSize += newZoomLevel;
+        normalZoomLevel += newZoomLevel;
     }
 }

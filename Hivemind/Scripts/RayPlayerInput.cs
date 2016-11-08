@@ -18,7 +18,7 @@ public class RayPlayerInput : MonoBehaviour {
     GameObject triggerIndicator;
     GameObject ui;
 
-    Cameras cameras;
+    CameraController cameras;
     RayMovement rayMovement;
     CharacterInteraction characterInteraction;
 
@@ -33,7 +33,7 @@ public class RayPlayerInput : MonoBehaviour {
         ui = GameObject.FindGameObjectWithTag("UI");
         triggerIndicator = ui.transform.FindChild("TriggerIndicator").gameObject;
 
-        cameras = FindObjectOfType<Cameras>();
+        cameras = FindObjectOfType<CameraController>();
     }
 	
 	void Update ()
@@ -58,13 +58,16 @@ public class RayPlayerInput : MonoBehaviour {
         // Running (hard coded key for now)
         rayMovement.Run = Input.GetKey(KeyCode.LeftShift);
 
+        // If running, sets camera's x offset
         if (rayMovement.Run) cameras.SetRunXOffset((int)rayMovement.CharacterInput.x);
 
+        // If run is pressed down, activates run camera
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             cameras.ActivateRunCamera(true);
         }
 
+        // If run button is released, deactivates run camera and x offset
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             cameras.ActivateRunCamera(false);
@@ -86,6 +89,11 @@ public class RayPlayerInput : MonoBehaviour {
                 inTrigger.GetComponent<ElevatorTrigger>().requirementMet = transform.name.Contains(inTrigger.GetComponent<ElevatorTrigger>().requiredAuthorization) ? true : false;
 
             inTrigger.GetComponent<Trigger>().Activate();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            CharacterManager.ChangeCurrentCharacter();
         }
 
         // Up (climb, go up in levels) (hard coded key for now)
