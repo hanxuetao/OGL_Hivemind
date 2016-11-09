@@ -509,9 +509,9 @@ public class CharacterManager : MonoBehaviour {
                 }
                 instance.infectedCharacters.Remove(entity);
             }
+            SetCurrentCharacter();
             entity.Die();
             if (instance.infectedCharacters.Count <= 0) instance.StopCoroutine(instance.InfectionTimer());
-            SetCurrentCharacter();
         }
     }
 

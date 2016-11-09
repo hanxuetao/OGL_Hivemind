@@ -129,7 +129,8 @@ public class RayPlayerInput : MonoBehaviour {
         // Creates the projectile
         Debug.Log("Facing " + facingDirection);
 
-        shot = (GameObject)Instantiate(projectile, sporeShotSource.transform.position, Quaternion.Euler(new Vector3(0, facingDirection > 0 ? 0 : 180, 0)));
+        if (shot == null)
+            shot = (GameObject)Instantiate(projectile, sporeShotSource.transform.position, Quaternion.Euler(new Vector3(0, facingDirection > 0 ? 0 : 180, 0)));
 
         // Uses object pool to spawn a projectile
         //shot = ObjectPool.current.Spawn(projectile, sporeShotSource.transform.position, Quaternion.identity);
