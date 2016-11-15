@@ -132,8 +132,6 @@ public class CharacterManager : MonoBehaviour {
         {
             if (infectedCharacters.Count <= 0) StopCoroutine(InfectionTimer());
 
-            Debug.Log("Infection timer tick");
-
             // If first tick, which happens too early because of no delay, does not advance timers
             if (!firstTimerTickPassed)
             {
@@ -213,11 +211,8 @@ public class CharacterManager : MonoBehaviour {
         {
             go.GetComponent<VIDE_Assign>().assignedDialogue = allCharacters[indexOfEntity].character.VideConversation;
             go.GetComponent<VIDE_Assign>().assignedIndex = allCharacters[indexOfEntity].character.VideConversationIndex;
-<<<<<<< HEAD
 			go.GetComponent<VIDE_Assign>().dialogueName = allCharacters[indexOfEntity].character.VideConversation.ToString();
-=======
             go.GetComponent<VIDE_Assign>().dialogueName = allCharacters[indexOfEntity].character.VideConversation.ToString();
->>>>>>> origin/master
         }
 
         // If animator is set, gives it to the spawned character
@@ -237,7 +232,7 @@ public class CharacterManager : MonoBehaviour {
         Entity e = go.GetComponent<Entity>();
         RayNPC rnpc = go.GetComponent<RayNPC>();
         RayPlayerInput rpi = go.GetComponent<RayPlayerInput>();
-        CharacterInteraction ci = go.GetComponent<CharacterInteraction>();
+        //CharacterInteraction ci = go.GetComponent<CharacterInteraction>();
 
         // Checks if character is currently NPC
         if (allCharacters[indexOfEntity].isNPC)
@@ -248,7 +243,7 @@ public class CharacterManager : MonoBehaviour {
             rnpc.enabled = true;
             rnpc.SetAIBehaviourActive(true);
             rpi.enabled = false;
-            ci.enabled = false;
+            //ci.enabled = false;
         }
         else
         {
@@ -258,7 +253,7 @@ public class CharacterManager : MonoBehaviour {
             rnpc.SetAIBehaviourActive(false);
             rnpc.enabled = false;
             rpi.enabled = true;
-            ci.enabled = true;
+            //ci.enabled = true;
             infectedCharacters.Add(go.GetComponent<Entity>());
             if (allCharacters[indexOfEntity].currentStateOfInfection == CharacterEnums.InfectionState.None)
             {
@@ -408,6 +403,13 @@ public class CharacterManager : MonoBehaviour {
     /// <param name="enabled">Set player control enabled.</param>
     public static void SetPlayerControl(Entity entity, bool enabled)
     {
+		if (enabled) {
+			entity.gameObject.layer = LayerMask.NameToLayer("Player");
+
+		} else {
+			entity.gameObject.layer = LayerMask.NameToLayer("Character");
+		}
+
         GameObject go = entity.GetGameObject();
 
         // Stop movement so that character does not stay running forever in case it was running
@@ -513,9 +515,9 @@ public class CharacterManager : MonoBehaviour {
                 }
                 instance.infectedCharacters.Remove(entity);
             }
+            SetCurrentCharacter();
             entity.Die();
             if (instance.infectedCharacters.Count <= 0) instance.StopCoroutine(instance.InfectionTimer());
-            SetCurrentCharacter();
         }
     }
 

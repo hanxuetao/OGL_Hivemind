@@ -41,9 +41,19 @@ public class RayPlayerInput : MonoBehaviour {
 	void Update ()
     {
         // Interaction with NPC's (hard coded key for now)
-        characterInteraction.TryInteraction = Input.GetKeyDown(KeyCode.E);
+        //characterInteraction.TryInteraction = Input.GetKeyDown(KeyCode.E);
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            transform.GetComponentInChildren<InteractionPerimeter>().InteractWithCurrentTarget();
+        }
 
         if (!enablePlayerInput) return;
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            transform.GetComponentInChildren<InteractionPerimeter>().TryGetNextInteractionTarget();
+        }
 
         // Shooting
         if (Input.GetButtonDown("Fire1"))
@@ -63,17 +73,7 @@ public class RayPlayerInput : MonoBehaviour {
         // Running (hard coded key for now)
         rayMovement.Run = Input.GetKey(KeyCode.LeftShift);
 
-<<<<<<< HEAD
-        // If running, sets camera's x offset
-        if (rayMovement.Run) cameras.SetRunXOffset((int)rayMovement.CharacterInput.x);
-
-        // If run is pressed down, activates run camera
-
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-=======
         if (rayMovement.CharacterInput != Vector2.zero)
->>>>>>> origin/master
         {
             // If running, sets camera's x offset
             if (rayMovement.Run) cameras.SetRunXOffset((int)rayMovement.CharacterInput.x);
@@ -135,11 +135,12 @@ public class RayPlayerInput : MonoBehaviour {
         // Gets mouse position from screen
         //Vector2 target = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
         //Vector2 myPos = new Vector2(sporeShotSource.transform.position.x, sporeShotSource.transform.position.y);
+        //Debug.Log("Facing " + facingDirection);
 
         // Creates the projectile
-        Debug.Log("Facing " + facingDirection);
 
-        shot = (GameObject)Instantiate(projectile, sporeShotSource.transform.position, Quaternion.Euler(new Vector3(0, facingDirection > 0 ? 0 : 180, 0)));
+        if (shot == null)
+            shot = (GameObject)Instantiate(projectile, sporeShotSource.transform.position, Quaternion.Euler(new Vector3(0, facingDirection > 0 ? 0 : 180, 0)));
 
         // Uses object pool to spawn a projectile
         //shot = ObjectPool.current.Spawn(projectile, sporeShotSource.transform.position, Quaternion.identity);
