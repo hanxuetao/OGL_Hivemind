@@ -63,7 +63,17 @@ public class RayPlayerInput : MonoBehaviour {
         // Running (hard coded key for now)
         rayMovement.Run = Input.GetKey(KeyCode.LeftShift);
 
+<<<<<<< HEAD
+        // If running, sets camera's x offset
+        if (rayMovement.Run) cameras.SetRunXOffset((int)rayMovement.CharacterInput.x);
+
+        // If run is pressed down, activates run camera
+
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+=======
         if (rayMovement.CharacterInput != Vector2.zero)
+>>>>>>> origin/master
         {
             // If running, sets camera's x offset
             if (rayMovement.Run) cameras.SetRunXOffset((int)rayMovement.CharacterInput.x);
