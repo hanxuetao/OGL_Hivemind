@@ -211,6 +211,7 @@ public class CharacterManager : MonoBehaviour {
         {
             go.GetComponent<VIDE_Assign>().assignedDialogue = allCharacters[indexOfEntity].character.VideConversation;
             go.GetComponent<VIDE_Assign>().assignedIndex = allCharacters[indexOfEntity].character.VideConversationIndex;
+			go.GetComponent<VIDE_Assign>().dialogueName = allCharacters[indexOfEntity].character.VideConversation.ToString();
             go.GetComponent<VIDE_Assign>().dialogueName = allCharacters[indexOfEntity].character.VideConversation.ToString();
         }
 
