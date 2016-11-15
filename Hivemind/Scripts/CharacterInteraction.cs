@@ -12,10 +12,10 @@ public class CharacterInteraction : MonoBehaviour
     [Tooltip("Interaction perimeter radius.")]
     public float perimeterRadius = 10f;
 
-    public Material glowMaterial;
+    //public Material glowMaterial;
 
-    // Because pivot is bottom center, this is added to transform.position to center the perimeter to character
-    float perimeterCenterY = 3.5f;
+    //// Because pivot is bottom center, this is added to transform.position to center the perimeter to character
+    //float perimeterCenterY = 3.5f;
     
     RayMovement rm;
     RayPlayerInput rpi;
@@ -86,10 +86,10 @@ public class CharacterInteraction : MonoBehaviour
 
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(transform.position + Vector3.up * perimeterCenterY, perimeterRadius);
-    }
+    //void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.DrawWireSphere(transform.position + Vector3.up * perimeterCenterY, perimeterRadius);
+    //}
 
     /// <summary>
     /// Casts a ray to see if we hit an NPC and, if so, we interact

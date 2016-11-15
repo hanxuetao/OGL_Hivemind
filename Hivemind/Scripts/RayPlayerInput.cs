@@ -41,9 +41,19 @@ public class RayPlayerInput : MonoBehaviour {
 	void Update ()
     {
         // Interaction with NPC's (hard coded key for now)
-        characterInteraction.TryInteraction = Input.GetKeyDown(KeyCode.E);
+        //characterInteraction.TryInteraction = Input.GetKeyDown(KeyCode.E);
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            transform.GetComponentInChildren<InteractionPerimeter>().InteractWithCurrentTarget();
+        }
 
         if (!enablePlayerInput) return;
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            transform.GetComponentInChildren<InteractionPerimeter>().TryGetNextInteractionTarget();
+        }
 
         // Shooting
         if (Input.GetButtonDown("Fire1"))
@@ -135,9 +145,9 @@ public class RayPlayerInput : MonoBehaviour {
         // Gets mouse position from screen
         //Vector2 target = Camera.main.ScreenToWorldPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
         //Vector2 myPos = new Vector2(sporeShotSource.transform.position.x, sporeShotSource.transform.position.y);
+        //Debug.Log("Facing " + facingDirection);
 
         // Creates the projectile
-        Debug.Log("Facing " + facingDirection);
 
         if (shot == null)
             shot = (GameObject)Instantiate(projectile, sporeShotSource.transform.position, Quaternion.Euler(new Vector3(0, facingDirection > 0 ? 0 : 180, 0)));
