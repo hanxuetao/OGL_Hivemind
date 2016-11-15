@@ -403,6 +403,13 @@ public class CharacterManager : MonoBehaviour {
     /// <param name="enabled">Set player control enabled.</param>
     public static void SetPlayerControl(Entity entity, bool enabled)
     {
+		if (enabled) {
+			entity.gameObject.layer = LayerMask.NameToLayer("Player");
+
+		} else {
+			entity.gameObject.layer = LayerMask.NameToLayer("Character");
+		}
+
         GameObject go = entity.GetGameObject();
 
         // Stop movement so that character does not stay running forever in case it was running
