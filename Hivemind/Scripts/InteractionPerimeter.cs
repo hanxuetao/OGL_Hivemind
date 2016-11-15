@@ -201,15 +201,18 @@ public class InteractionPerimeter : MonoBehaviour
         // Check for interactable NPC
         if (obj.tag == "NPC") // && obj.GetComponent<RayNPC>()
         {
-            // Check for a ghost object
             if (obj.name.StartsWith("Ghost")) {
-                //discussionPartner = obj.transform.parent.gameObject;
-                //obj.GetComponent<Entity>().character.isInteractable
-                //GhostManager.Instance.characters.Find(x=>x.Ghost == )
+                if (obj.GetComponentInParent<Entity>().character.isInteractable)
+                {
+                    discussionPartner = obj.transform.parent.gameObject;
+                }
             }
             else
             {
-                discussionPartner = obj;
+                if (obj.GetComponent<Entity>().character.isInteractable)
+                {
+                    discussionPartner = obj;
+                }
             }
 
             InitializeDialogue();
@@ -271,6 +274,8 @@ public class InteractionPerimeter : MonoBehaviour
         {
             dialogueUI.NextNode();
         }
+
+        if (!dialogueUI.dialogue.isLoaded) return;
 
         if (dialogueUI.dialogue.nodeData.currentIsPlayer)
         {
