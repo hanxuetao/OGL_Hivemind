@@ -30,7 +30,7 @@ public class InfectionUI : MonoBehaviour {
         GameObject go = (GameObject)Instantiate(UIPanelPrefab, transform, false);
         go.transform.FindChild("Character").GetComponent<Text>().text = e.character.characterName;
         go.transform.FindChild("InfectionStage").GetComponent<Text>().text = e.currentStateOfInfection.ToString();
-        go.GetComponent<Image>().fillAmount = (((float)e.character.infectionStageDuration + 1 - (float)e.currentInfectionStageDuration) / (float)e.character.infectionStageDuration);
+        go.GetComponent<Image>().fillAmount = (((float)e.character.infectionStageDuration - (float)e.currentInfectionStageDuration) / (float)e.character.infectionStageDuration);
     }
 
     void CharacterManager_OnInfectionAdvance()
@@ -44,7 +44,7 @@ public class InfectionUI : MonoBehaviour {
 
             Entity e = CharacterManager.instance.infectedCharacters[i];
             transform.GetChild(i).FindChild("InfectionStage").GetComponent<Text>().text = e.currentStateOfInfection.ToString();
-            transform.GetChild(i).GetComponent<Image>().fillAmount = (((float)e.character.infectionStageDuration + 1 - (float)e.currentInfectionStageDuration) / (float)e.character.infectionStageDuration);
+            transform.GetChild(i).GetComponent<Image>().fillAmount = (((float)e.character.infectionStageDuration - (float)e.currentInfectionStageDuration) / (float)e.character.infectionStageDuration);
         }
     }
 }
