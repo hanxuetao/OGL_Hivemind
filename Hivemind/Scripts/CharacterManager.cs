@@ -211,11 +211,11 @@ public class CharacterManager : MonoBehaviour {
         {
             go.GetComponent<VIDE_Assign>().assignedDialogue = allCharacters[indexOfEntity].character.VideConversation;
             go.GetComponent<VIDE_Assign>().assignedIndex = allCharacters[indexOfEntity].character.VideConversationIndex;
-<<<<<<< HEAD
+
 			go.GetComponent<VIDE_Assign>().dialogueName = allCharacters[indexOfEntity].character.VideConversation.ToString();
-=======
+
             go.GetComponent<VIDE_Assign>().dialogueName = allCharacters[indexOfEntity].character.VideConversation.ToString();
->>>>>>> origin/master
+
         }
 
         // If animator is set, gives it to the spawned character
